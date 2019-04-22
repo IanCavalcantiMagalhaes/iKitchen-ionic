@@ -1,0 +1,46 @@
+<ion-header>
+    <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+          </ion-buttons>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <ion-title>
+        iKitchen
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+<ion-content padding>
+        <ion-list>
+                <ion-item *ngFor="let item of list">
+                  <p color="white">{{ item.email }}</p>
+                  <p color="white"></p>
+              </ion-item>
+        </ion-list><!--https://forum.ionicframework.com/t/how-to-read-object-object-using-angular-2/92833/2-->>
+    <h1 id="titulo">Insira os dados {{ IdLogado  }}</h1>
+    <br>
+    <!-- FORMULÁRIO -->
+    <form [formGroup]="formulario" id="Form">
+      <ion-list>
+          <!-- EMAIL -->
+          <ion-item>
+          <ion-label position="floating">E-mail</ion-label>
+          <ion-input type="email" formControlName="email" ></ion-input>
+          </ion-item>
+          <!-- SENHA -->
+          <ion-item>
+          <ion-label position="floating">Senha</ion-label>
+          <ion-input type="password" formControlName="senha"></ion-input>
+          </ion-item>
+      </ion-list>
+      
+      <!-- LOGAR -->
+      <ion-button shape="round" expand="full" color="light" (click)="clicou()"> 
+          Logar 
+      </ion-button> 
+    
+    </form>
+    <p id="alerta"></p>
+
+    <!-- CADASTRAR -->
+    
+  </ion-content>

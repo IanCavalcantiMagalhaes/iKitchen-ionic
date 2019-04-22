@@ -1,0 +1,17 @@
+.activated {
+   //color:white;
+   //background-color: orangered;
+} 
+ion-tab-button{
+   // color:black;
+}
+.tabbar a[aria-selected=true] {
+    border-top: 1px;
+    border-style: solid;    
+}
+.tabs-md .tab-button[aria-selected=true] {
+    color: #DD2C00 !important;
+  }
+  .tabs-md .tab-button[aria-selected=false] {
+    color: black !important;
+  }

@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-title>Configuraçoes de conta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    
+  <ion-tabs selectedIndex="1" style="position:relative;bottom:-25%;">
+  
+    <ion-tab-bar slot="top">
+  
+      <ion-tab-button tab="pessoal" (click)="PessoalSelecionado()" [appDirPessoal]="pessoalSelecionado">
+        <ion-label>Pessoal</ion-label>
+        <ion-icon name="home"></ion-icon>
+        <ion-badge style="background-color:orangered">6</ion-badge>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="pagamento" (click)="PagamentoSelecionado()" [appDirPagamento]="pagamentoSelecionado">
+        <ion-label>Pagamento</ion-label>
+        <ion-icon name="settings"></ion-icon>
+      </ion-tab-button>
+
+      <ion-tab-button tab="entrega" (click)="EntregaSelecionado()" [appDirEntrega]="entregaSelecionado">
+        <ion-label>Entrega</ion-label>
+        <ion-icon name="settings"></ion-icon>
+      </ion-tab-button>
+  
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>
