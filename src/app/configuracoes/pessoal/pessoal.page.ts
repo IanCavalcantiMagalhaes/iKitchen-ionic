@@ -6,6 +6,7 @@ import { NavController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { UsuarioService } from '../../services/usuario.service';
+import { MascaraService } from '../../services/mascara.service';
 
 @Component({
   selector: 'app-pessoal',
@@ -15,18 +16,23 @@ import { UsuarioService } from '../../services/usuario.service';
 export class PessoalPage implements OnInit {
 
   formulario: FormGroup;
+  
+  
   constructor(private formBuilder:FormBuilder,private Serv:ServService,
     private router: Router,private storage:Storage,
     private serv:ServService,
     private usuarioService:UsuarioService,
+    private mascara:MascaraService,
     private toastCtrl:ToastController
     ) { }
 
-  public SomenteLer:boolean;TextoEdicao:String;
+  public SomenteLer:boolean;
+  TextoEdicao;
   mostrarBotao:boolean;
   userData;
   public userId;
   X;
+
     async ListarValores(){
       var id;
         await this.storage.get('id').then((value) => {
@@ -44,11 +50,14 @@ export class PessoalPage implements OnInit {
     this.ListarValores();
     this.formulario = this.formBuilder.group({
       email:['', [Validators.email, Validators.required]],
-      cpf:['', [Validators.required]]
+      cpf_cnpj:['', [Validators.required]]
     });
     this.SomenteLer=true;
     
     this.mostrarBotao=false;
+  }
+  mask(v){
+    return this.mascara.format(v,'cpf');
   }
 
   ngOnChange(){
@@ -56,9 +65,7 @@ export class PessoalPage implements OnInit {
   }
 
   async botaoAlterar(){
-    //var x= this.formulario.get('email').value;
-    //this.toastPessoal(x+" "+this.userId);
-    
+    //this.CPFVelhoOuNovo();
     this.usuarioService.updateUser(
       this.userId,
       this.formulario.get('email').value,
@@ -105,7 +112,13 @@ export class PessoalPage implements OnInit {
  
   toast.present();
   }
+  CPFVelhoOuNovo(){
+    if(this.formulario.get('cpfNovo').value=='' || 
+        this.formulario.get('cpfNovo').value.length<14){
+      return this.formulario.get('cpfVelho').value;
+    }else{
+      return this.formulario.get('cpfNovo').value;
+    }
+  }
   
-  
-
 }

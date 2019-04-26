@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Test</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #loginForm="ngForm">
+    <ion-item>
+      <ion-label floating>CPF/CNPJ</ion-label>
+      <ion-input [(ngModel)]="cpf_cnpj" (change)="cpf_cnpj = format(cpf_cnpj)" name="cpf_cnpj"></ion-input>
+    </ion-item>
+    <button ion-button full type="submit" color="sicor" (tap)="login(signForm.value)">Login</button>
+  </form>
+</ion-content>

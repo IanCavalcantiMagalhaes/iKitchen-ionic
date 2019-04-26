@@ -21,6 +21,12 @@ export class BancoService {
         cpf TEXT,\
         senha TEXT\
         )", []);
+      db.executeSql("CREATE TABLE IF NOT EXISTS localDeEntrega(\
+        id INTEGER PRIMARY KEY AUTOINCREMENT,\
+        residencia TEXT,\
+        cep TEXT,\
+        usuario_id INTEGER\
+        )", []);
 
       //Criando tarefas 
       /*db.executeSql("CREATE TABLE IF NOT EXISTS tarefas(\

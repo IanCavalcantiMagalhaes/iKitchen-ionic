@@ -64,6 +64,69 @@ export class UsuarioService extends BancoService{
     },id);
   }
 
+  UpdateCEP(localId,userId,cep,residencia){
+    this.tabela="localDeEntrega";
+    this.update({
+      usuario_id:userId,
+      cep:cep,
+      residencia:residencia
+    },localId)
+
+  }
+  DadosDeEntrega(idCep){
+    this.tabela="localDeEntrega";
+    return this.getDB().then((db:SQLiteObject) => {
+      return db.executeSql("SELECT * FROM localDeEntrega WHERE id=?", [idCep]).then(resultado => {
+        let retornar = [];
+        if (resultado.rows.length > 0) {
+          for(let i = 0; i < resultado.rows.length; i++) {
+            retornar.push(resultado.rows.item(i));
+          }
+        }
+        return retornar;
+      })
+    });
+    
+  }
+  QuantidadeDeCepsCadastrados(userId){
+    return this.getDB().then((db:SQLiteObject) => {
+      return db.executeSql("SELECT * FROM localDeEntrega WHERE usuario_id=?", [userId]).then(resultado => {
+        return resultado.rows.length;
+      });
+    });
+
+  }
+  LocalizacaoAindaNaoExistente(cep,residencia){
+    return this.getDB().then((db:SQLiteObject) => {
+      return db.executeSql("SELECT * FROM localDeEntrega WHERE cep = ? AND residencia = ?", [cep, residencia]).then(resultado => {
+        return (resultado.rows.length = 0);//nao ter=true
+      });
+    });
+  }
+  public async AddCepOfUser(id,cep,residencia){
+    this.getDB().then((db:SQLiteObject) => {
+      db.executeSql("INSERT INTO localDeEntrega(usuario_id,cep,residencia) VALUES(?,?,?)", [1,"111111","222"]);
+    },(error) => {//https://stackoverflow.com/questions/41347793/ionic-2-unable-to-create-table-typeerror-cannot-read-property-apply-of-undef
+      console.error("Unable to open database", error);
+    });
+  }
+  public getCEPByUserId(id){
+    
+    return this.getDB().then((db:SQLiteObject) => {
+      return db.executeSql("SELECT * FROM localDeEntrega WHERE usuario_id=?", [id]).then(resultado => {
+        let retornar = [];
+        if (resultado.rows.length > 0) {
+          for(let i = 0; i < resultado.rows.length; i++) {
+            retornar.push(resultado.rows.item(i));
+          }
+        }
+        
+        return retornar;
+      })
+    });
+  }
+
+
   public delete(Email){
     this.deleteByEmail(Email);
   }

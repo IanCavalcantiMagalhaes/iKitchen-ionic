@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'pessoal', loadChildren: './configuracoes/pessoal/pessoal.module#PessoalPageModule' },
   { path: 'entrega', loadChildren: './configuracoes/entrega/entrega.module#EntregaPageModule' },
   { path: 'edit-pagamento', loadChildren: './configuracoes/edit-pagamento/edit-pagamento.module#EditPagamentoPageModule' },
+  { path: 'test', loadChildren: './test/test.module#TestPageModule' },
   
  
 ];

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NavController, NumericValueAccessor, ToastController } from '@ionic/angular';
+import { NavController, NumericValueAccessor, ToastController, MenuController } from '@ionic/angular';
 import { AutenticacaoGuard } from '../guard/autenticacao.guard';
 import { UsuarioService } from '../services/usuario.service';
 import { Storage } from '@ionic/storage';
@@ -24,8 +24,9 @@ export class LoginPage implements OnInit {
     private storage:Storage,
     private serv:ServService,
     private usuarioService:UsuarioService,
-    private toastCtrl:ToastController) { }
-    X;
+    private toastCtrl:ToastController,
+    private menuCtrl:MenuController) { }
+
     list;
   async ngOnInit() {
     //this.storage.set('id',5);
@@ -44,12 +45,15 @@ export class LoginPage implements OnInit {
       senha:['', [Validators.required, Validators.minLength(6)]]
     });
   }  
+  ionViewWillEnter() {
+    this.menuCtrl.enable(false,"first");
+  }
   
   IdLogado;
   logou:boolean;
   data;
- 
-
+  public X:string;
+  
  async clicou() {
       this.IdLogado=this.formulario.get('senha').value;
       this.logou=await this.usuarioService.logar(
@@ -66,13 +70,13 @@ export class LoginPage implements OnInit {
             this.formulario.get('email').value);
 
           //this.IdLogado=this.TratarJSON(this.IdLogado);
-          let val=Object.values(this.IdLogado);
+          let val=Object.values(this.IdLogado);//"id:1" para "1"
           this.IdLogado=val[0];
           this.storage.set('id',this.IdLogado);
 
           this.toastLogin("usuario de id "+this.IdLogado
           +" logado com sucesso");
-          
+          this.menuCtrl.enable(true,"first");
           this.router.navigateByUrl('configuracoes/pessoal');
     } else  {
       this.toastLogin("Email ou senha incorreta");

@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, Renderer } from '@angular/core';
 import { PessoalPage } from './pessoal/pessoal.page';
 import { ServService } from '../serv.service';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-configuracoes',
@@ -9,8 +10,10 @@ import { ServService } from '../serv.service';
 })
 export class ConfiguracoesPage implements OnInit {
 
-  constructor(private element:ElementRef,private render:Renderer
-    ,private Serv:ServService) { }
+  constructor(private element:ElementRef,
+    private render:Renderer,
+    private Serv:ServService,
+    private menuCtrl:MenuController) { }
 
   ngOnInit() {
     this.pessoalSelecionado=true;
@@ -22,6 +25,9 @@ export class ConfiguracoesPage implements OnInit {
   pagamentoSelecionado:boolean;
   pessoalSelecionado:boolean;
 
+  ionViewWillEnter() {
+    this.menuCtrl.enable(true,"first");
+  }
   BotaoEdicao(){
     if(this.SomenteLer){
       this.HabilitarEdicao();

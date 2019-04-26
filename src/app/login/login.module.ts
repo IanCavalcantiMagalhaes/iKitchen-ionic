@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, MenuController } from '@ionic/angular';
 
 import { LoginPage } from './login.page';
 import { ServicesModule } from '../services/services.module';
+import { BrMaskerModule } from 'brmasker-ionic-3';
 
 const routes: Routes = [
   {
@@ -22,7 +23,9 @@ const routes: Routes = [
     IonicModule,
     ServicesModule,
     RouterModule.forChild(routes),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrMaskerModule,
+    
   ],
   declarations: [LoginPage]
 })

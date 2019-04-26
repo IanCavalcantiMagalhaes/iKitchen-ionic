@@ -1,8 +1,9 @@
 <ion-header>
     <ion-toolbar>
-          <ion-buttons slot="start">
-            <ion-back-button></ion-back-button>
-          </ion-buttons>
+      <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+         
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <ion-title>
         iKitchen
@@ -10,6 +11,7 @@
     </ion-toolbar>
   </ion-header>
 <ion-content padding>
+
         <ion-list>
                 <ion-item *ngFor="let item of list">
                   <p color="white">{{ item.email }}</p>
@@ -21,6 +23,12 @@
     <!-- FORMULÁRIO -->
     <form [formGroup]="formulario" id="Form">
       <ion-list>
+        <!-- CPF https://pt.stackoverflow.com/questions/363703/problema-com-brmask-no-ionic-4
+        <ion-item>
+            <ion-label position="floating">CPF</ion-label>
+            <ion-input type="CPF" formControlName="CPF"
+             [brmasker]="{form: formulario.get('cpf'), mask: '999.999.999-99'}"></ion-input>
+            </ion-item>-->
           <!-- EMAIL -->
           <ion-item>
           <ion-label position="floating">E-mail</ion-label>
@@ -40,7 +48,7 @@
     
     </form>
     <p id="alerta"></p>
-
+    
     <!-- CADASTRAR -->
     
   </ion-content>
