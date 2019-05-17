@@ -1,0 +1,44 @@
+
+<ion-item *ngIf="BarraDePesquisa==true">
+  <ion-input type="text" name="CampoDePesquisa" placeholder="Digite o que quer pesquisar"></ion-input>
+  <ion-button>Filtrar</ion-button>
+</ion-item>
+<ion-menu side="start" menuId="first">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>Start Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <!-- The core Firebase JS SDK is always required and must be listed first -->
+<!-- <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
+
+TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app 
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAcOet68HIQ0mvDE2lhgBEVtouDmNwNLCM",
+    authDomain: "project-f72e3.firebaseapp.com",
+    databaseURL: "https://project-f72e3.firebaseio.com",
+    projectId: "project-f72e3",
+    storageBucket: "project-f72e3.appspot.com",
+    messagingSenderId: "628949823864",
+    appId: "1:628949823864:web:6731a1100f3e9bc6"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>-->
+      <ion-list>
+        <ion-item>Menu Item</ion-item>
+        <ion-item>Menu Item</ion-item>
+        <ion-item>Menu Item</ion-item>
+        <ion-item>Menu Item</ion-item>
+        <ion-item (click)="sair()">Sair</ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  
+  
+  <ion-router-outlet main></ion-router-outlet>

@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+        </ion-buttons>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <ion-title>
+        iKitchen
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen="true">
+    
+ 
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <section>
+    <div id="Logo2">
+      <img src="logo.jpg">
+    </div>
+       
+    <br>
+    <div id="Opcoes">
+        <h4>Ja tem conta?</h4>
+        <button ion-button (click)="IrParaLogin()" >Loge-se aqui</button>
+    
+      
+        <h4>Nao tem conta?</h4>
+        <button ion-button (click)="IrParaCadastro()" >Crie uma conta aqui</button>
+        
+    </div>
+
+  <button ion-button (click)="Clicou()" >Clique</button>
+      <p style="color:white;">Conectado:{{ X }}</p>
+</section>
+ </ion-content>
+
