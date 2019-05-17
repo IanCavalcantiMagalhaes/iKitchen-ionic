@@ -9,7 +9,7 @@ export class BancoService {
   protected tabela:string;
 
   constructor(private sqlite: SQLite) { 
-    this.createDB();
+    //this.createDB();
   }
 
   async createDB() {

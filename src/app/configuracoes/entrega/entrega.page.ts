@@ -24,8 +24,9 @@ export class EntregaPage implements OnInit {
   userId;
   LocalId;
   DadosCEP;
-  Edicao;
-
+  Edicao:boolean;
+  cepNovo:string='';
+  numeroResidencialNovo;
   async ngOnInit() {
     this.Edicao=false;
     //this.toastEntrega("AAAA");
@@ -42,31 +43,54 @@ export class EntregaPage implements OnInit {
     //this.ListaCep=[];
     //this.ListaCep=[{cep:"AAA",residencia:"AAA"}];
     this.ListaCep=[await this.usuario.getCEPByUserId(1)];
-    this.toastEntrega(this.ListaCep[0].cep);
+    //this.toastEntrega(this.ListaCep[0].cep);
     this.formulario = this.formBuilder.group({
-      cepNovo:['', [Validators.email, Validators.required]],
+      cepNovo:['', [Validators.required]],
       numeroResidencialNovo:['', [Validators.required, Validators.minLength(6)]]
     });
     
   }
-  Mask(v,formato){
-    return this.mascara.format(v,formato);
+  mask(v){
+    //this.toastEntrega("V "+v);
+    return this.mascara.format(v,'cep');
   }
-  async InserirDadosDeEntrega(){//Insert
-    /*let quantidade=await this.usuario.QuantidadeDeCepsCadastrados(this.userId);
-    let inexistente=await this.usuario.LocalizacaoAindaNaoExistente(this.formulario.get('cepNovo').value,
-                                                              this.formulario.get('numeroResidencialNovo').value);
-    
-    if(quantidade<4 || inexistente){
-      this.usuario.AddCepOfUser(
+  cepNovoColor="";
+  async InserirDadosDeEntregaNovos(){//Insert
+    let quantidade=await this.usuario.QuantidadeDeCepsCadastrados(this.userId);
+    let inexistente:boolean=await this.usuario.LocalizacaoAindaNaoExistente(this.cepNovo,this.numeroResidencialNovo);
+    this.FormatoCepConsitente();
+    quantidade=1;
+    inexistente=true;
+    //this.toastEntrega(this.CepInvalido);
+    if(this.CepInvalido){
+      this.cepNovoColor="rgb(255, 153, 153)";
+      this.toastEntrega("CEP tem que ter 8 caracteres");
+    }else if(quantidade>4){
+      this.cepNovoColor="rgb(255, 153, 153)";
+      this.toastEntrega("Limite de quantidade de ceps atingido");
+
+    }else if(!inexistente){
+      this.cepNovoColor="rgb(255, 153, 153)";
+      this.toastEntrega("Cep ja existente na sua conta");
+
+    }else{
+      this.cepNovoColor="";
+      /*this.usuario.AddCepOfUser(
         this.userId,
         this.formulario.get('cepNovo').value,
-        this.formulario.get('numeroResidencialNovo').value);
+        this.formulario.get('numeroResidencialNovo').value);*/
         this.toastEntrega("Adicionado com sucesso");
-    }else{
-      this.toastEntrega("Limite de quantidade de ceps atingido");
-    }*/
+    }
     
+  }
+  CepInvalido;//variavel vai para directive
+  FormatoCepConsitente(){
+    let cep=this.cepNovo.split("");
+    if(cep.length<8){
+      this.CepInvalido=true;
+    }else{
+      this.CepInvalido=false;
+    }
   }
   CepSelecionado(){//update
     this.DadosCEP=[];
@@ -90,7 +114,8 @@ export class EntregaPage implements OnInit {
       message: Text,
       duration: 2500,
       showCloseButton: true,
-      closeButtonText: "Fechar"
+      closeButtonText: "Fechar",
+      position:'top'
   });
  
   toast.present();

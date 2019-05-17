@@ -27,8 +27,8 @@
           <ion-item>
               
               <ion-label position="floating">CPF(Atual):{{ item.cpf }}</ion-label>
-              <ion-input [(ngModel)]="cpf_cnpj" maxlength="11" value="{{ item.cpf }}"  formControlName="cpf_cnpj"
-               (change)="cpf_cnpj = mask(cpf_cnpj,'cpf')" name="cpf_cnpj"></ion-input>
+              <ion-input [(ngModel)]="cpf_cnpj" maxlength="11" value="{{ item.cpf }}" formControlName="cpf_cnpj"
+               (change)="cpf_cnpj = mask(cpf_cnpj,'cpf')" name="cpf_cnpj" readonly="{{ SomenteLer }}"></ion-input>
           </ion-item>
           <!-- SENHA -->
           <ion-item>
@@ -40,7 +40,7 @@
         </ion-list>
       </ion-item>
       <!-- ALTERAR  -->
-      <ion-button type="submit" *ngIf="mostrarBotao==true" (click)="botaoAlterar()" id="botaoAlterar" color="green"> 
+      <ion-button  *ngIf="mostrarBotao==true" (click)="botaoAlterar()" id="botaoAlterar" color="green"> 
           Alterar 
       </ion-button>
       

@@ -55,13 +55,11 @@ export class UsuarioService extends BancoService{
   public listar(){
     return this.getAll();
   }
-  public updateUser(id,email,cpf){
+  public async updateUser(id,email,cpf,senha){
+    this.getDB().then((db:SQLiteObject) => {
+      db.executeSql("UPDATE usuarios SET email=?,cpf=?,senha=? WHERE id = ?", [email,cpf,senha,id]);
+    });
     
-    //this.bancoService.toastBanco("email");
-    this.update({
-      email: email,
-      cpf:cpf
-    },id);
   }
 
   UpdateCEP(localId,userId,cep,residencia){
@@ -99,9 +97,10 @@ export class UsuarioService extends BancoService{
   LocalizacaoAindaNaoExistente(cep,residencia){
     return this.getDB().then((db:SQLiteObject) => {
       return db.executeSql("SELECT * FROM localDeEntrega WHERE cep = ? AND residencia = ?", [cep, residencia]).then(resultado => {
-        return (resultado.rows.length = 0);//nao ter=true
+        return true;//nao ter=true
       });
     });
+    return false;
   }
   public async AddCepOfUser(id,cep,residencia){
     this.getDB().then((db:SQLiteObject) => {

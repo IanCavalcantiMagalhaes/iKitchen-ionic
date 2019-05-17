@@ -57,6 +57,7 @@ export class PessoalPage implements OnInit {
     this.mostrarBotao=false;
   }
   mask(v){
+    //this.toastPessoal(v);
     return this.mascara.format(v,'cpf');
   }
 
@@ -66,12 +67,14 @@ export class PessoalPage implements OnInit {
 
   async botaoAlterar(){
     //this.CPFVelhoOuNovo();
+    
     this.usuarioService.updateUser(
       this.userId,
       this.formulario.get('email').value,
-      this.formulario.get('cpf').value);
+      this.formulario.get('cpf_cnpj').value,"123");
+    this.toastPessoal("Alterado com sucesso");
+    
       
-      this.toastPessoal("Alterado com sucesso");
       this.DesabilitarEdicao();
       
       
@@ -95,12 +98,10 @@ export class PessoalPage implements OnInit {
   }
   DesabilitarEdicao(){
     this.TextoEdicao="Editar";
-    this.Serv.setSomenteLer(true);
     this.SomenteLer=true;
     this.mostrarBotao=false;
-    this.ListarValores()
     //location.reload;
-    //this.router.navigateByUrl('configuracoes/pessoal');
+    this.router.navigateByUrl('configuracoes/pessoal');
   }
   async toastPessoal(Text){
     let toast = await this.toastCtrl.create({

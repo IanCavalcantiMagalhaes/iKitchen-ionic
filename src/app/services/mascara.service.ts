@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NavController, MenuController, AlertController, ModalController } from '@ionic/angular';
 import { IfStmt } from '@angular/compiler';
+import { ToastService } from '../toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ constructor(
   public modalCtrl: ModalController, 
   private alertCtrl: AlertController,
   private menu: MenuController,
-  public navCtrl: NavController, 
+  public navCtrl: NavController,
+  private t:ToastService, 
   ){} 
 
   ionViewDidEnter() {
@@ -30,10 +32,11 @@ constructor(
   }
 
   public format(valString,formato) {
-    console.log(valString);
+    //this.t.Mensagem(valString);
     if (!valString) {
         return '';
     }
+    
     let val = valString.toString();
     const parts = this.unFormat(val).split(this.DECIMAL_SEPARATOR);
     this.pureResult = parts;
@@ -41,6 +44,7 @@ constructor(
       this.maskedId = this.cpf_mask(parts[0]);
       return this.maskedId;
     }if(formato=="cep"){
+      //this.t.Mensagem("AAA");
       this.maskedId = this.cep_mask(parts[0]);
       return this.maskedId;
     }
@@ -75,7 +79,8 @@ unFormat(val) {
     return v;
 }
   cep_mask(v){
-    v=v.replace(/(\d{5})(\d{1,3})$/, '$1-$2');
+    v = v.replace(/\D/g, ''); //Remove tudo o que não é dígito
+    v = v.replace(/(\d{5})(\d{1,3})$/, '$1-$2'); //Coloca um hífen entre o terceiro e o quarto dígitos
     return v;
   }
 

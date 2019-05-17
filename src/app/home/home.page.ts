@@ -6,7 +6,7 @@ import { UsuarioService } from '../services/usuario.service';
 //import { NetworkInterface } from '@ionic-native/network-interface/ngx';
 
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
-
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-home',
@@ -18,18 +18,21 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 
 export class HomePage {
   msg:string;
-
   constructor(public navCtrl: NavController,private router: Router,
     //private networkInterface: NetworkInterface
     private usuarioService:UsuarioService,
     private sqlite: SQLite,
-    ) {}
+    ) {
+    }
     X:boolean;
     v;
   async ngOnInit(){
-   
-    this.usuarioService.delete("aaa");
-    this.usuarioService.delete("Ian");
+    
+    let db = firebase.database();
+    db.ref('nome').set('Carlos');
+    console.log("OLA");
+    //this.usuarioService.delete("aaa");
+    //this.usuarioService.delete("Ian");
    /* this.msg="";
     this.networkInterface.getWiFiIPAddress()
     .then(address => console.info(`IP: ${address.ip}, Subnet: ${address.subnet}`))

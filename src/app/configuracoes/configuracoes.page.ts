@@ -9,7 +9,7 @@ import { MenuController } from '@ionic/angular';
   styleUrls: ['./configuracoes.page.scss'],
 })
 export class ConfiguracoesPage implements OnInit {
-
+  BarraPesquisa=false;
   constructor(private element:ElementRef,
     private render:Renderer,
     private Serv:ServService,
