@@ -6,6 +6,7 @@ import { AutenticacaoGuard } from '../guard/autenticacao.guard';
 import { UsuarioService } from '../services/usuario.service';
 import { Storage } from '@ionic/storage';
 import { ServService } from '../serv.service';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-login',
@@ -29,17 +30,7 @@ export class LoginPage implements OnInit {
 
     list;
   async ngOnInit() {
-    //this.storage.set('id',5);
-    //this.serv.GuardarId(5);
-   // console.log(await this.serv.PegarId());
-   this.storage.remove('id');
-   
-    //this.usuarioService.delete("Ian");
-    //this.usuarioService.CadastrarDadosBasicosDeUsuario("Ian","123","999.999.999-99");
-    this.IdLogado="OLA";
-    //this.list=[await this.usuarioService.getUserById(1)];
-    //this.list=await this.usuarioService.getUserById(18);
-    //this.list=await this.usuarioService.listar();
+    
     this.formulario = this.formBuilder.group({
       email:['', [Validators.email, Validators.required]],
       senha:['', [Validators.required, Validators.minLength(6)]]
@@ -53,8 +44,24 @@ export class LoginPage implements OnInit {
   logou:boolean;
   data;
   public X:string;
-  
- async clicou() {
+  async clicou(){
+    firebase.auth().signInWithEmailAndPassword(
+      this.formulario.get('email').value,this.formulario.get('senha').value).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorCode+" : "+errorMessage);
+        this.toastCtrl.Mensagem(errorCode+" : "+errorMessage);
+        // ...
+    });
+    firebase.auth().onAuthStateChanged(function(user) {//https://firebase.google.com/docs/auth/web/manage-users?hl=pt-br
+      if (user) {
+        this.toastCtrl.Mensagem("Logado com sucesso");
+        this.router.navigateByUrl('configuracoes/pessoal');
+      }
+    });
+  }
+ /*async clicou() {
       this.IdLogado=this.formulario.get('senha').value;
       this.logou=await this.usuarioService.logar(
         this.formulario.get('email').value,
@@ -101,6 +108,6 @@ export class LoginPage implements OnInit {
   });
  
   toast.present();
-  }
+  }*/
 
 }

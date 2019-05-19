@@ -6,6 +6,7 @@ import { AutenticacaoGuard } from '../guard/autenticacao.guard';
 import { UsuarioService } from '../services/usuario.service';
 import { Storage } from '@ionic/storage';
 import { ServService } from '../serv.service';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-criarconta',
@@ -15,13 +16,15 @@ import { ServService } from '../serv.service';
 export class CriarcontaPage implements OnInit {
 
   formulario: FormGroup;
-
+  db;
   constructor(private formBuilder:FormBuilder,
     private usuarioService:UsuarioService,
     private storage:Storage,
     private navCtrl: NavController,
     private router:Router,
-    private toastCtrl:ToastController) { }
+    private toastCtrl:ToastController) { 
+      this.db = firebase.database();
+    }
     id;
   async ngOnInit() {
     this.formulario = this.formBuilder.group({
@@ -29,7 +32,25 @@ export class CriarcontaPage implements OnInit {
       senha:['', [Validators.required, Validators.minLength(6)]]
     });
   }
-  async clicou(){
+  Cadastrar(){
+    let uid=this.db.ref('produto').push().key;
+    firebase.auth().createUserWithEmailAndPassword(
+      this.formulario.get('email').value,this.formulario.get('senha').value
+        ).catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          this.toastCtrl.Mensagem(errorCode+" : "+errorMessage);
+          // ...
+      });
+    this.db.ref('usuario').child(uid).set(
+      {
+        uid:uid,
+        email:this.formulario.get('email').value,
+        senha:this.formulario.get('senha').value
+      });
+  }
+ /* async clicou(){
     let aceitar=await this.verificarSeEmailExistente(this.formulario.get('email').value);
     this.id=Object.values(await this.usuarioService.UltimoIdInserido());
     if(aceitar){
@@ -67,5 +88,5 @@ export class CriarcontaPage implements OnInit {
     });
    
     toast.present();
-    }
+    }*/
 }

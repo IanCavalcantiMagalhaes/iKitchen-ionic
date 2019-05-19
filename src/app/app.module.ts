@@ -12,7 +12,14 @@ import {HttpClientModule, HttpClient} from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader} from '@ngx-translate/core';
+import { AdMobFree } from '@ionic-native/admob-free/ngx';
 
+export function HttpLoaderFactory(http: HttpClient) {
+   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -20,6 +27,13 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
       IonicStorageModule.forRoot(),
       HttpClientModule,
       BrMaskerModule,
+     TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+            }
+     }),
       AngularFireModule.initializeApp({
         apiKey: "SEU API KEY",
         authDomain: "SEU AUTH DOMAIN",
@@ -32,6 +46,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
   ],
   providers: [
     StatusBar,
+    AdMobFree,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

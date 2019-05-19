@@ -7,6 +7,7 @@ import { UsuarioService } from '../services/usuario.service';
 
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 import * as firebase from 'firebase';
+import { AdMobFree } from '@ionic-native/admob-free/ngx';
 
 @Component({
   selector: 'app-home',
@@ -22,15 +23,39 @@ export class HomePage {
     //private networkInterface: NetworkInterface
     private usuarioService:UsuarioService,
     private sqlite: SQLite,
+    private admobFree: AdMobFree
     ) {
     }
     X:boolean;
     v;
   async ngOnInit(){
     
+    this.admobFree.banner.config({
+      id: 'ca-app-pub-8487437273346534/1477069444',
+      isTesting:true, //Está em ambiente de teste
+      autoShow: true
+      });
+      this.admobFree.banner.prepare(); //Executa o banner
+
     let db = firebase.database();
-    db.ref('nome').set('Carlos');
-    console.log("OLA");
+    var data=[];
+    let uid=db.ref('produto').push().key;
+    db.ref('produto').child(uid).set({id:uid,nome:"ian1",preço:1500,idade:18});
+    db.ref('produto').once('value').then(snapshot => {
+      snapshot.forEach(produto => {
+       // console.log(produto.val().nome);
+         //Pega cada pessoa por vez
+      });
+    });
+    
+    firebase.auth().signInWithEmailAndPassword("email@gmail.com", "password").catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(errorMessage);
+      // ...
+    });
+    console.log(firebase.auth().currentUser.displayName);
     //this.usuarioService.delete("aaa");
     //this.usuarioService.delete("Ian");
    /* this.msg="";
