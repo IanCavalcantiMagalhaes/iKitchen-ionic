@@ -21,6 +21,7 @@ export class PrincipalPage implements OnInit {
   Dados;
   Nome:string;
   ngOnInit() {
+    
   }
   async pesquisar(nomeProduto){
     let db=firebase.database();
