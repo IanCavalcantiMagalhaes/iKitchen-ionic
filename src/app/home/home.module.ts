@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ServicesModule } from '../services/services.module'
 import { HomePage } from './home.page';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 
 @NgModule({
   imports: [
@@ -20,5 +21,9 @@ import { HomePage } from './home.page';
     ])
   ],
   declarations: [HomePage]
+  ,
+  providers: [
+    GooglePlus
+  ]
 })
 export class HomePageModule {}

@@ -6,6 +6,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
@@ -17,7 +19,8 @@ export class AppComponent {
     private statusBar: StatusBar,
     private menu:MenuController,
     private router:Router,
-    private navCtrl:NavController
+    private navCtrl:NavController,
+    private googlePlus: GooglePlus
   ) {
     this.initializeApp();
   }
@@ -43,6 +46,8 @@ export class AppComponent {
   }
   sair(){
     this.menu.enable(false,"first");
+    firebase.auth().signOut();
+    this.googlePlus.logout();
     this.navCtrl.navigateBack('/home');
     
   }

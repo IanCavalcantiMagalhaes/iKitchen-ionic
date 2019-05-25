@@ -7,6 +7,7 @@ import { UsuarioService } from '../services/usuario.service';
 import { Storage } from '@ionic/storage';
 import { ServService } from '../serv.service';
 import * as firebase from 'firebase';
+import { ToastService } from '../toast.service';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,7 @@ export class LoginPage implements OnInit {
     private storage:Storage,
     private serv:ServService,
     private usuarioService:UsuarioService,
-    private toastCtrl:ToastController,
+    private toastCtrl:ToastService,
     private menuCtrl:MenuController) { }
 
     list;
@@ -46,7 +47,11 @@ export class LoginPage implements OnInit {
   public X:string;
   async clicou(){
     firebase.auth().signInWithEmailAndPassword(
-      this.formulario.get('email').value,this.formulario.get('senha').value).catch(function(error) {
+      this.formulario.get('email').value,this.formulario.get('senha').value).then(user =>{
+        this.toastCtrl.Mensagem("Logado com sucesso");
+        this.menuCtrl.enable(true,"first");
+        this.router.navigateByUrl('configuracoes/pessoal');
+      }).catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
@@ -54,12 +59,12 @@ export class LoginPage implements OnInit {
         this.toastCtrl.Mensagem(errorCode+" : "+errorMessage);
         // ...
     });
-    firebase.auth().onAuthStateChanged(function(user) {//https://firebase.google.com/docs/auth/web/manage-users?hl=pt-br
+    /*firebase.auth().onAuthStateChanged(function(user) {//https://firebase.google.com/docs/auth/web/manage-users?hl=pt-br
       if (user) {
         this.toastCtrl.Mensagem("Logado com sucesso");
         this.router.navigateByUrl('configuracoes/pessoal');
       }
-    });
+    });*/
   }
  /*async clicou() {
       this.IdLogado=this.formulario.get('senha').value;

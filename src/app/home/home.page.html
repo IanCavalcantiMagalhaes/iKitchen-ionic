@@ -20,15 +20,23 @@
        
     <br>
     <div id="Opcoes">
-        <h4>Ja tem conta?</h4>
-        <button ion-button (click)="IrParaLogin()" >Loge-se aqui</button>
-    
-      
-        <h4>Nao tem conta?</h4>
-        <button ion-button (click)="IrParaCadastro()" >Crie uma conta aqui</button>
-        
+      <h4>Ja tem conta?</h4>
+      <button ion-button (click)="IrParaLogin()" >Loge-se aqui</button>
     </div>
-
+    <br>
+    <div id="Opcoes">
+      <h4>Nao tem conta?</h4>
+      <button ion-button (click)="IrParaCadastro()" >Crie uma conta aqui</button>
+    </div> 
+    <br>  
+    <div id="Opcoes">
+      <h4>Login com a conta do google</h4>
+      <button ion-button (click)="googlePlusLogin()">
+        Login
+        <ion-icon name="logo-googleplus"></ion-icon>
+      </button>
+    </div> 
+    
   <button ion-button (click)="Clicou()" >Clique</button>
       <p style="color:white;">Conectado:{{ X }}</p>
 </section>

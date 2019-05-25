@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform, AlertController, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../services/usuario.service';
-
 //import { NetworkInterface } from '@ionic-native/network-interface/ngx';
 
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 import * as firebase from 'firebase';
 import { AdMobFree } from '@ionic-native/admob-free/ngx';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { ToastService } from '../toast.service';
 
 @Component({
   selector: 'app-home',
@@ -23,7 +24,12 @@ export class HomePage {
     //private networkInterface: NetworkInterface
     private usuarioService:UsuarioService,
     private sqlite: SQLite,
-    private admobFree: AdMobFree
+    private admobFree: AdMobFree,
+    private toastCtrl:ToastService,
+    private googlePlus: GooglePlus,
+    public loadingController: LoadingController,
+    private platform: Platform,
+    public alertController: AlertController
     ) {
     }
     X:boolean;
@@ -39,23 +45,19 @@ export class HomePage {
 
     let db = firebase.database();
     var data=[];
-    let uid=db.ref('produto').push().key;
-    db.ref('produto').child(uid).set({id:uid,nome:"ian1",preço:1500,idade:18});
-    db.ref('produto').once('value').then(snapshot => {
-      snapshot.forEach(produto => {
-       // console.log(produto.val().nome);
-         //Pega cada pessoa por vez
-      });
-    });
     
-    firebase.auth().signInWithEmailAndPassword("email@gmail.com", "password").catch(function(error) {
+    firebase.auth().signInWithEmailAndPassword("email@gmail.com", "password").then(user=>{
+
+      console.log(firebase.auth().currentUser.email);
+
+    }).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log(errorMessage);
       // ...
     });
-    console.log(firebase.auth().currentUser.displayName);
+    //console.log(firebase.auth().currentUser.displayName);
     //this.usuarioService.delete("aaa");
     //this.usuarioService.delete("Ian");
    /* this.msg="";
@@ -63,6 +65,19 @@ export class HomePage {
     .then(address => console.info(`IP: ${address.ip}, Subnet: ${address.subnet}`))
     .catch(error => console.error(`Unable to get IP: ${error}`));*/
   }
+  
+ 
+  googlePlusLogin() {
+  var a;  
+  this.googlePlus.login({
+      
+
+    })
+  .then(res => this.toastCtrl.Mensagem(res))
+  .catch(err => this.toastCtrl.Mensagem(err)
+  );
+  }     
+
   async Clicou(){
     
     
@@ -81,13 +96,5 @@ export class HomePage {
     this.router.navigate(['/criarconta']);
     //this.navCtrl.back();
   }
-
-
-  /** Recupera o banco de dados  */
-  protected getDB() {
-    return this.sqlite.create({
-      name: 'aula_banco.db',
-      location: 'default'
-    });
-  }
+  
 }

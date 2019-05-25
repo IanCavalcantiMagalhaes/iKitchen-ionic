@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NavController, NumericValueAccessor, ToastController } from '@ionic/angular';
+import { NavController, NumericValueAccessor, ToastController, MenuController } from '@ionic/angular';
 import { AutenticacaoGuard } from '../guard/autenticacao.guard';
 import { UsuarioService } from '../services/usuario.service';
 import { Storage } from '@ionic/storage';
 import { ServService } from '../serv.service';
 import * as firebase from 'firebase';
+import { ToastService } from '../toast.service';
 
 @Component({
   selector: 'app-criarconta',
@@ -22,7 +23,8 @@ export class CriarcontaPage implements OnInit {
     private storage:Storage,
     private navCtrl: NavController,
     private router:Router,
-    private toastCtrl:ToastController) { 
+    private toastCtrl:ToastService,
+    private menuCtrl:MenuController) { 
       this.db = firebase.database();
     }
     id;
@@ -36,18 +38,16 @@ export class CriarcontaPage implements OnInit {
     let uid=this.db.ref('produto').push().key;
     firebase.auth().createUserWithEmailAndPassword(
       this.formulario.get('email').value,this.formulario.get('senha').value
-        ).catch(function(error) {
+        ).then(user => {
+          this.toastCtrl.Mensagem("Cadastrado com suceeso");
+          this.menuCtrl.enable(true,"first");
+          this.router.navigateByUrl('configuracoes/pessoal');
+        }).catch(function(error) {
           // Handle Errors here.
           var errorCode = error.code;
           var errorMessage = error.message;
           this.toastCtrl.Mensagem(errorCode+" : "+errorMessage);
           // ...
-      });
-    this.db.ref('usuario').child(uid).set(
-      {
-        uid:uid,
-        email:this.formulario.get('email').value,
-        senha:this.formulario.get('senha').value
       });
   }
  /* async clicou(){

@@ -12,8 +12,8 @@
 <ion-searchbar showcancelbutton="" nmae="x" [(ngModel)]="a" (change)="pesquisar(a)"></ion-searchbar>
 <ion-list>
     <ion-item [ngStyle]="{'background-image': 'url(../../assets/img/logo.jpg)'}"></ion-item>
-    <ion-item *ngFor="let item of list">
-        {{ item }}
+    <ion-item *ngFor="let item of Dados">
+        {{ item.nome }}
       <ion-item [ngStyle]="{'color':'orange','width':'50%','font-size':'75%'}">
         R$:1.999,99(Parcelas 2x:)
       </ion-item>
