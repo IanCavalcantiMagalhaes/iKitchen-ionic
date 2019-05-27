@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MascaraService } from '../../services/mascara.service';
 import { UsuarioService } from '../../services/usuario.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ToastController } from '@ionic/angular';
+import { ToastController, NumericValueAccessor } from '@ionic/angular';
+import { ToastService } from '../../toast.service';
+import * as firebase from 'firebase';
+import { ChildActivationEnd } from '@angular/router';
+import { CartaoPage } from '../../pagamento/cartao/cartao.page';
 
 @Component({
   selector: 'app-entrega',
@@ -13,12 +17,15 @@ export class EntregaPage implements OnInit {
 
   formulario:FormGroup;
   formulario2:FormGroup;
+  db;
   constructor(private mascara:MascaraService,
     private usuario:UsuarioService,
     private formBuilder:FormBuilder,
-    private toastCtrl:ToastController,
+    private toastCtrl:ToastService,
     //private storage:Storage
-    ) { }
+    ) {
+      this.db=firebase.database();
+    }
   ListaCep;
   LocalizacaoSelecionado;
   userId;
@@ -28,13 +35,13 @@ export class EntregaPage implements OnInit {
   cepNovo:string='';
   numeroResidencialNovo;
   async ngOnInit() {
-    this.Edicao=false;
+    
     //this.toastEntrega("AAAA");
-    var id;
+    /*var id;
       /*await this.storage.get('id').then((value) => {
         id=Number(value);
         console.log(value);
-      });*/
+      });
     this.userId=1;
     this.usuario.AddCepOfUser(1,
       "55555555",
@@ -42,7 +49,7 @@ export class EntregaPage implements OnInit {
     
     //this.ListaCep=[];
     //this.ListaCep=[{cep:"AAA",residencia:"AAA"}];
-    this.ListaCep=[await this.usuario.getCEPByUserId(1)];
+    this.ListaCep=[await this.usuario.getCEPByUserId(1)];*/
     //this.toastEntrega(this.ListaCep[0].cep);
     this.formulario = this.formBuilder.group({
       cepNovo:['', [Validators.required]],
@@ -56,6 +63,37 @@ export class EntregaPage implements OnInit {
   }
   cepNovoColor="";
   async InserirDadosDeEntregaNovos(){//Insert
+    var cep=[];
+    var numeroResidencial=[];
+
+    this.db.ref('usuario')
+      .child(firebase.auth().currentUser.uid)
+        .child('LocalDeEntregua')
+          .child('cep').once('value').then(snapshot => {
+            snapshot.forEach(userResult => {
+              if(userResult.val()){
+                cep.push(userResult.val());console.log(userResult.val());
+              }
+              
+              //numeroResidencial.push(userResult.val().NumeroResidencia);
+            //Pega cada pessoa por vez
+            })
+            cep.push(this.cepNovo);
+            this.db.ref('usuario')
+              .child(firebase.auth().currentUser.uid)
+              .child('LocalDeEntregua').child('cep').set(cep);
+    });
+    numeroResidencial.push(this.numeroResidencialNovo);
+    
+
+    
+    this.db.ref('usuario')
+      .child(firebase.auth().currentUser.uid)
+        .child('LocalDeEntregua').set(numeroResidencial);
+
+    this.Edicao=false;
+    this.toastCtrl.Mensagem("Adicionado com sucesso");
+    /*
     let quantidade=await this.usuario.QuantidadeDeCepsCadastrados(this.userId);
     let inexistente:boolean=await this.usuario.LocalizacaoAindaNaoExistente(this.cepNovo,this.numeroResidencialNovo);
     this.FormatoCepConsitente();
@@ -79,10 +117,10 @@ export class EntregaPage implements OnInit {
         this.userId,
         this.formulario.get('cepNovo').value,
         this.formulario.get('numeroResidencialNovo').value);*/
-        this.toastEntrega("Adicionado com sucesso");
+        
     }
     
-  }
+  
   CepInvalido;//variavel vai para directive
   FormatoCepConsitente(){
     let cep=this.cepNovo.split("");
@@ -109,16 +147,6 @@ export class EntregaPage implements OnInit {
   DeleteCEP(){
 
   }
-  async toastEntrega(Text){
-    let toast = await this.toastCtrl.create({
-      message: Text,
-      duration: 2500,
-      showCloseButton: true,
-      closeButtonText: "Fechar",
-      position:'top'
-  });
- 
-  toast.present();
-  }
+  
 
 }

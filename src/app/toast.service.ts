@@ -6,9 +6,9 @@ import { ToastController } from '@ionic/angular';
 })
 export class ToastService {
 
-  constructor(private toastCtrl:ToastController) { }
+  constructor(public toastCtrl:ToastController) { }
 
-  async Mensagem(Text){
+  public async Mensagem(Text){
     let toast = await this.toastCtrl.create({
       message: Text,
       duration: 2500,

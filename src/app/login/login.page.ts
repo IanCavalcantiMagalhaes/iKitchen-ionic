@@ -16,7 +16,6 @@ import { ToastService } from '../toast.service';
 })
 export class LoginPage implements OnInit {
 
-  msg;
   formulario: FormGroup;
  
 
@@ -26,12 +25,12 @@ export class LoginPage implements OnInit {
     private storage:Storage,
     private serv:ServService,
     private usuarioService:UsuarioService,
-    private toastCtrl:ToastService,
+    public toastCtrl:ToastService,
     private menuCtrl:MenuController) { }
 
     list;
   async ngOnInit() {
-    
+    firebase.auth().signOut();
     this.formulario = this.formBuilder.group({
       email:['', [Validators.email, Validators.required]],
       senha:['', [Validators.required, Validators.minLength(6)]]
@@ -45,20 +44,26 @@ export class LoginPage implements OnInit {
   logou:boolean;
   data;
   public X:string;
-  async clicou(){
+  clicou(){
+    var mensagem="";
     firebase.auth().signInWithEmailAndPassword(
       this.formulario.get('email').value,this.formulario.get('senha').value).then(user =>{
         this.toastCtrl.Mensagem("Logado com sucesso");
+        mensagem="Logado com sucesso";
         this.menuCtrl.enable(true,"first");
         this.router.navigateByUrl('configuracoes/pessoal');
-      }).catch(function(error) {
+      }).catch(error => {
         // Handle Errors here.
+        mensagem=error;
         var errorCode = error.code;
         var errorMessage = error.message;
-        console.log(errorCode+" : "+errorMessage);
         this.toastCtrl.Mensagem(errorCode+" : "+errorMessage);
+        console.log(errorCode+" : "+errorMessage);
+        mensagem=errorCode.toString()+" : "+errorMessage.toString();
+        
         // ...
     });
+    //this.toastCtrl.Mensagem(mensagem);
     /*firebase.auth().onAuthStateChanged(function(user) {//https://firebase.google.com/docs/auth/web/manage-users?hl=pt-br
       if (user) {
         this.toastCtrl.Mensagem("Logado com sucesso");

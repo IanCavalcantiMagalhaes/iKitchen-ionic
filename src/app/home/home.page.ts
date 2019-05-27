@@ -20,6 +20,7 @@ import { ToastService } from '../toast.service';
 
 export class HomePage {
   msg:string;
+  db;
   constructor(public navCtrl: NavController,private router: Router,
     //private networkInterface: NetworkInterface
     private usuarioService:UsuarioService,
@@ -31,6 +32,7 @@ export class HomePage {
     private platform: Platform,
     public alertController: AlertController
     ) {
+      
     }
     X:boolean;
     v;
@@ -45,7 +47,7 @@ export class HomePage {
 
     let db = firebase.database();
     var data=[];
-    
+    db.ref('test').set({nome:"AA",validade:""});
     firebase.auth().signInWithEmailAndPassword("email@gmail.com", "password").then(user=>{
 
       console.log(firebase.auth().currentUser.email);

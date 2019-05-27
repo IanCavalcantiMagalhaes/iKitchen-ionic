@@ -35,14 +35,20 @@ export class CriarcontaPage implements OnInit {
     });
   }
   Cadastrar(){
-    let uid=this.db.ref('produto').push().key;
+    let uid=this.db.ref('usuario').push().key;
     firebase.auth().createUserWithEmailAndPassword(
       this.formulario.get('email').value,this.formulario.get('senha').value
         ).then(user => {
+          this.db.ref('usuario').set(firebase.auth().currentUser.uid);
+          this.db.ref('usuario').child(firebase.auth().currentUser.uid).set(
+            { email:this.formulario.get('email').value,
+              cpf_cnpj:""
+            });
           this.toastCtrl.Mensagem("Cadastrado com suceeso");
+
           this.menuCtrl.enable(true,"first");
           this.router.navigateByUrl('configuracoes/pessoal');
-        }).catch(function(error) {
+        }).catch(error=>{
           // Handle Errors here.
           var errorCode = error.code;
           var errorMessage = error.message;

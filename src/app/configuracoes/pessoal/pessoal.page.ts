@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { UsuarioService } from '../../services/usuario.service';
 import { MascaraService } from '../../services/mascara.service';
+import * as firebase from 'firebase';
+import { ToastService } from 'src/app/toast.service';
 
 @Component({
   selector: 'app-pessoal',
@@ -23,7 +25,7 @@ export class PessoalPage implements OnInit {
     private serv:ServService,
     private usuarioService:UsuarioService,
     private mascara:MascaraService,
-    private toastCtrl:ToastController
+    private toastCtrl:ToastService
     ) { }
 
   public SomenteLer:boolean;
@@ -32,9 +34,31 @@ export class PessoalPage implements OnInit {
   userData;
   public userId;
   X;
+  id;
+  email:string="";
+  cpf_cnpj:string;
+  senha:string;
 
     async ListarValores(){
+
+      let db = firebase.database();
+      this.userData=[];
       var id;
+      
+      firebase.auth().onAuthStateChanged(user=>{
+        this.TextoEdicao="Editar "+user.uid;
+        db.ref('usuario').once('value').then(snapshot => {
+          snapshot.forEach(userResult => {
+            this.userData.push(userResult.val());
+            console.log(userResult.val().email); 
+          
+          //Pega cada pessoa por vez
+          })
+        });
+      });
+      //this.TextoEdicao="Editar "+id;
+
+      /*var id;
         await this.storage.get('id').then((value) => {
           id=Number(value);
           console.log(value);
@@ -42,18 +66,20 @@ export class PessoalPage implements OnInit {
         this.userId=id;
         this.TextoEdicao="Editar "+id;
         this.userData=[];
-        this.userData=[await this.usuarioService.getUserById(id)];
-        //this.userData=[{email:"Ian",cpf:"999.999.999-99"}];//Teste sem banco
-        
+        this.userData=[await this.usuarioService.getUserById(id)];*/
+        //this.userData=[{Email:"Ian",cpf:"999.999.999-99"}];//Teste sem banco
+      
     }
   async ngOnInit() {
-    this.ListarValores();
+    
+    
     this.formulario = this.formBuilder.group({
-      email:['', [Validators.email, Validators.required]],
-      cpf_cnpj:['', [Validators.required]]
+      email:['', [Validators.required]],
+      cpf_cnpj:['', [Validators.required]],
+      senha:['', [Validators.required]]
     });
     this.SomenteLer=true;
-    
+    this.ListarValores();
     this.mostrarBotao=false;
   }
   mask(v){
@@ -65,14 +91,52 @@ export class PessoalPage implements OnInit {
     this.SomenteLer=this.Serv.getSomenteLer();
   }
 
-  async botaoAlterar(){
+  botaoAlterar(){
+    let db = firebase.database();
     //this.CPFVelhoOuNovo();
+    var erros;
     
-    this.usuarioService.updateUser(
+    var user = firebase.auth().currentUser;
+    console.log(this.cpf_cnpj.length);
+    //Email
+    user.updateEmail(this.email).then(user=>{
+
+      db.ref('usuario')
+        .child(firebase.auth().currentUser.uid)
+          .child('email').set(this.email);
+        
+    }).catch(error=>{
+      erros+=" Email";
+    });
+    //SENHA
+    user.updatePassword(this.formulario.get('senha').value).then(user=>{
+
+    }).catch(error=>{
+      erros+=" senha";
+    });
+    //CPF
+    if(this.cpf_cnpj.length==14){
+      db.ref('usuario').child(user.uid).child('cpf_cnpj').set(
+        this.formulario.get('cpf_cnpj').value);
+    }else{
+      erros+=" cpf";
+    }
+    if(erros){
+      this.toastCtrl.Mensagem("Erros nos seguintes campos: "+erros);
+      console.log(erros);
+    }else{
+      this.toastCtrl.Mensagem("Alterado com sucesso");
+    }
+    
+        
+      
+
+      
+    /*this.usuarioService.updateUser(
       this.userId,
       this.formulario.get('email').value,
-      this.formulario.get('cpf_cnpj').value,"123");
-    this.toastPessoal("Alterado com sucesso");
+      this.formulario.get('cpf_cnpj').value,"123");*/
+    
     
       
       this.DesabilitarEdicao();
@@ -103,16 +167,7 @@ export class PessoalPage implements OnInit {
     //location.reload;
     this.router.navigateByUrl('configuracoes/pessoal');
   }
-  async toastPessoal(Text){
-    let toast = await this.toastCtrl.create({
-      message: Text,
-      duration: 2500,
-      showCloseButton: true,
-      closeButtonText: "Fechar"
-  });
- 
-  toast.present();
-  }
+  
   CPFVelhoOuNovo(){
     if(this.formulario.get('cpfNovo').value=='' || 
         this.formulario.get('cpfNovo').value.length<14){

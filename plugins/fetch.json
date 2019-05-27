@@ -10,7 +10,15 @@
   "cordova-plugin-googleplus": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-googleplus@7.0.1"
+      "id": "cordova-plugin-googleplus"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-admob-free": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-admob-free"
     },
     "is_top_level": true,
     "variables": {}

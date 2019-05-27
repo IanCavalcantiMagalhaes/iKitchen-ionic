@@ -20,14 +20,15 @@
           <!-- EMAIL -->
           <ion-item>
               <ion-label position="floating">E-mail:{{ item.email }} </ion-label>
-              <ion-input type="text" value="{{ item.email }}" formControlName="email" readonly="{{ SomenteLer }}"></ion-input>
+              <ion-input [(ngModel)]="email" name="email" type="email" value="{{ item.email }}"
+               formControlName="email" readonly="{{ SomenteLer }}"></ion-input>
           </ion-item>
           <!--  CPF https://pt.stackoverflow.com/questions/363703/problema-com-brmask-no-ionic-4
           https://www.npmjs.com/package/brmasker-ionic-3 -->
           <ion-item>
               
               <ion-label position="floating">CPF(Atual):{{ item.cpf }}</ion-label>
-              <ion-input [(ngModel)]="cpf_cnpj" maxlength="11" value="{{ item.cpf }}" formControlName="cpf_cnpj"
+              <ion-input [(ngModel)]="cpf_cnpj" maxlength="11" value="{{ item.cpf_cnpj }}" formControlName="cpf_cnpj"
                (change)="cpf_cnpj = mask(cpf_cnpj,'cpf')" name="cpf_cnpj" readonly="{{ SomenteLer }}"></ion-input>
           </ion-item>
           <!-- SENHA -->
