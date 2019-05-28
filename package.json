@@ -41,6 +41,7 @@
     "cordova-plugin-admob-free": "0.27.0",
     "cordova-plugin-firebase": "2.0.5",
     "cordova-plugin-googleplus": "7.0.1",
+    "cordova-plugin-nativestorage": "2.3.2",
     "cordova-sqlite-storage": "^3.2.0",
     "core-js": "^2.5.4",
     "firebase": "^6.0.1",

@@ -68,20 +68,22 @@ export class EntregaPage implements OnInit {
 
     this.db.ref('usuario')
       .child(firebase.auth().currentUser.uid)
-        .child('LocalDeEntregua')
-          .child('cep').once('value').then(snapshot => {
-            snapshot.forEach(userResult => {
-              if(userResult.val()){
-                cep.push(userResult.val());console.log(userResult.val());
-              }
-              
-              //numeroResidencial.push(userResult.val().NumeroResidencia);
-            //Pega cada pessoa por vez
-            })
+        .child('dados')
+          .child('LocalDeEntregua')
+            .child('cep').once('value').then(snapshot => {
+              snapshot.forEach(userResult => {
+                if(userResult.val()){
+                  cep.push(userResult.val());console.log(userResult.val());
+                }
+                
+                //numeroResidencial.push(userResult.val().NumeroResidencia);
+              //Pega cada pessoa por vez
+              })
             cep.push(this.cepNovo);
             this.db.ref('usuario')
               .child(firebase.auth().currentUser.uid)
               .child('LocalDeEntregua').child('cep').set(cep);
+              this.toastCtrl.Mensagem("CEP adicionado");
     });
     numeroResidencial.push(this.numeroResidencialNovo);
     

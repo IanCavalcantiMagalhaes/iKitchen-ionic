@@ -17,18 +17,14 @@
                   <p color="white">{{ item.email }}</p>
                   <p color="white"></p>
               </ion-item>
-        </ion-list><!--https://forum.ionicframework.com/t/how-to-read-object-object-using-angular-2/92833/2-->>
+        </ion-list><!--https://forum.ionicframework.com/t/how-to-read-object-object-using-angular-2/92833/2-->
     <h1 id="titulo">Insira os dados {{ IdLogado  }}</h1>
     <br>
     <!-- FORMULÁRIO -->
     <form [formGroup]="formulario" id="Form">
-      <ion-list>
+      
         <!-- CPF https://pt.stackoverflow.com/questions/363703/problema-com-brmask-no-ionic-4
-        <ion-item>
-            <ion-label position="floating">CPF</ion-label>
-            <ion-input type="CPF" formControlName="CPF"
-             [brmasker]="{form: formulario.get('cpf'), mask: '999.999.999-99'}"></ion-input>
-            </ion-item>-->
+        
           <!-- EMAIL -->
           <ion-item>
           <ion-label position="floating">E-mail</ion-label>
@@ -39,16 +35,13 @@
           <ion-label position="floating">Senha</ion-label>
           <ion-input type="password" formControlName="senha"></ion-input>
           </ion-item>
-      </ion-list>
       
-      <!-- LOGAR -->
       <ion-button shape="round" expand="full" color="light" (click)="clicou()"> 
           Logar 
       </ion-button> 
-    
     </form>
-    <p id="alerta"></p>
-    
+    <!-- LOGAR -->
+      
     <!-- CADASTRAR -->
     
   </ion-content>

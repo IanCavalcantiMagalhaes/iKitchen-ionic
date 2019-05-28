@@ -31,10 +31,8 @@ TODO: Add SDKs for Firebase products that you want to use
   firebase.initializeApp(firebaseConfig);
 </script>-->
       <ion-list>
-        <ion-item>Menu Item</ion-item>
-        <ion-item>Menu Item</ion-item>
-        <ion-item>Menu Item</ion-item>
-        <ion-item>Menu Item</ion-item>
+        <ion-item menuClose (click)="IrParaProduto()">Produtos</ion-item>
+        <ion-item (click)="IrParaConfiguracoes()">Configuracoes</ion-item>
         <ion-item (click)="sair()">Sair</ion-item>
       </ion-list>
     </ion-content>

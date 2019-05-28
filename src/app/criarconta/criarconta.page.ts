@@ -40,10 +40,12 @@ export class CriarcontaPage implements OnInit {
       this.formulario.get('email').value,this.formulario.get('senha').value
         ).then(user => {
           this.db.ref('usuario').set(firebase.auth().currentUser.uid);
-          this.db.ref('usuario').child(firebase.auth().currentUser.uid).set(
-            { email:this.formulario.get('email').value,
-              cpf_cnpj:""
-            });
+          this.db.ref('usuario').child(firebase.auth().currentUser.uid)
+            .child('dados').set(
+              { email:this.formulario.get('email').value,
+                cpf_cnpj:"",
+                id:firebase.auth().currentUser.uid
+              });
           this.toastCtrl.Mensagem("Cadastrado com suceeso");
 
           this.menuCtrl.enable(true,"first");

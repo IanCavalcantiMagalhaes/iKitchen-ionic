@@ -51,4 +51,13 @@ export class AppComponent {
     this.navCtrl.navigateBack('/home');
     
   }
+  IrParaConfiguracoes(){
+    console.log("CCC");
+    this.menu.close();
+    this.navCtrl.navigateRoot('/configuracoes');
+  }
+  IrParaProduto(){
+    this.menu.close();
+    this.navCtrl.navigateRoot('/lista');
+  }
 }

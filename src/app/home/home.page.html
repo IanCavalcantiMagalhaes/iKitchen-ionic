@@ -17,7 +17,7 @@
     <div id="Logo2">
       <img src="logo.jpg">
     </div>
-       
+    <img src="{{ v }}">
     <br>
     <div id="Opcoes">
       <h4>Ja tem conta?</h4>
@@ -31,7 +31,7 @@
     <br>  
     <div id="Opcoes">
       <h4>Login com a conta do google</h4>
-      <button ion-button (click)="googlePlusLogin()">
+      <button ion-button (click)="doGoogleLogin()">
         Login
         <ion-icon name="logo-googleplus"></ion-icon>
       </button>
@@ -39,6 +39,7 @@
     
   <button ion-button (click)="Clicou()" >Clique</button>
       <p style="color:white;">Conectado:{{ X }}</p>
+      <button ion-button (click)="LoginDeAdministrador()" >Clique</button>
 </section>
  </ion-content>
 

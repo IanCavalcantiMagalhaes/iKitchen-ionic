@@ -15,7 +15,10 @@ const routes: Routes = [
   { path: 'entrega', loadChildren: './configuracoes/entrega/entrega.module#EntregaPageModule' },
   { path: 'edit-pagamento', loadChildren: './configuracoes/edit-pagamento/edit-pagamento.module#EditPagamentoPageModule' },
   { path: 'test', loadChildren: './test/test.module#TestPageModule' },
-  { path: 'principal', loadChildren: './produto/principal/principal.module#PrincipalPageModule' }
+  { path: 'principal', loadChildren: './produto/principal/principal.module#PrincipalPageModule' },
+  { path: 'loginAdmintrador', loadChildren: './administrador/login-admintrador/login-admintrador.module#LoginAdmintradorPageModule' },
+  { path: 'adicionarProduto', loadChildren: './administrador/adicionar-produto/adicionar-produto.module#AdicionarProdutoPageModule' }
+
   
   
  

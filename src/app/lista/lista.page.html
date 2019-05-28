@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
       <ion-buttons slot="start">
-          <ion-back-button></ion-back-button>
+          <ion-menu-button></ion-menu-button>
         </ion-buttons>
     <ion-title>Destaques</ion-title>
   </ion-toolbar>
@@ -13,9 +13,9 @@
 <ion-list>
     <ion-item [ngStyle]="{'background-image': 'url(../../assets/img/logo.jpg)'}"></ion-item>
     <ion-item *ngFor="let item of Dados">
-        {{ item.nome }}
+        {{ item.dados.nome }}
       <ion-item [ngStyle]="{'color':'orange','width':'50%','font-size':'75%'}">
-        R$:1.999,99(Parcelas 2x:)
+          {{ item.dados.preco }}(Parcelas 2x:)
       </ion-item>
     </ion-item>
   

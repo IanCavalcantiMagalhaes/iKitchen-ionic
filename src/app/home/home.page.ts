@@ -9,6 +9,8 @@ import * as firebase from 'firebase';
 import { AdMobFree } from '@ionic-native/admob-free/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { ToastService } from '../toast.service';
+import { ImagemService } from '../services/imagem.service';
+import { AdMobService } from '../services/ad-mob.service';
 
 @Component({
   selector: 'app-home',
@@ -24,28 +26,26 @@ export class HomePage {
   constructor(public navCtrl: NavController,private router: Router,
     //private networkInterface: NetworkInterface
     private usuarioService:UsuarioService,
-    private sqlite: SQLite,
     private admobFree: AdMobFree,
     private toastCtrl:ToastService,
     private googlePlus: GooglePlus,
     public loadingController: LoadingController,
     private platform: Platform,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private FirebaseStore:ImagemService,
+    private AdMob:AdMobService,
     ) {
       
     }
     X:boolean;
-    v;
+    public v;
   async ngOnInit(){
-    
-    this.admobFree.banner.config({
-      id: 'ca-app-pub-8487437273346534/1477069444',
-      isTesting:true, //Está em ambiente de teste
-      autoShow: true
-      });
-      this.admobFree.banner.prepare(); //Executa o banner
-
+    this.toastCtrl.Mensagem("OI");
     let db = firebase.database();
+    //this.Carregar();
+    this.AdMob.AtivarBanner();
+
+    
     var data=[];
     db.ref('test').set({nome:"AA",validade:""});
     firebase.auth().signInWithEmailAndPassword("email@gmail.com", "password").then(user=>{
@@ -68,17 +68,41 @@ export class HomePage {
     .catch(error => console.error(`Unable to get IP: ${error}`));*/
   }
   
- 
-  googlePlusLogin() {
-  var a;  
-  this.googlePlus.login({
-      
+ async Carregar(){//https://firebase.google.com/docs/storage/web/download-files
 
-    })
-  .then(res => this.toastCtrl.Mensagem(res))
-  .catch(err => this.toastCtrl.Mensagem(err)
-  );
-  }     
+
+  var storage = firebase.storage();
+  var Reference = storage.refFromURL('gs://project-f72e3.appspot.com')
+  //console.log(await this.FirebaseStore.LoadImage());
+  Reference.child('image/photo.jpg')
+    .getDownloadURL().then(url=> {
+    
+    // Or inserted into an <img> element:
+    this.v = document.getElementById('myimg');
+    this.v = url;
+    console.log(url);
+  }).catch(function(error) {
+    // Handle any errors
+  });
+ }
+
+	async doGoogleLogin(){
+    //https://ionicthemes.com/tutorials/about/ionic-google-login
+    /*const loading = await this.loadingController.create({
+      message: 'Please wait...'
+    });
+    this.presentLoading(loading);
+  
+    this.googlePlus.login({
+      'scopes': '', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
+      'webClientId': 'webClientId.apps.googleusercontent.com', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
+      'offline': true // Optional, but requires the webClientId - if set to true the plugin will also return a serverAuthCode, which can be used to grant offline access to a non-Google server
+    });*/
+ }
+	async presentLoading(loading) {
+		return await loading.present();
+	}
+    
 
   async Clicou(){
     
@@ -97,6 +121,10 @@ export class HomePage {
     
     this.router.navigate(['/criarconta']);
     //this.navCtrl.back();
+  }
+  LoginDeAdministrador(){
+    console.log("AAA");
+    this.router.navigate(['/loginAdmintrador']);
   }
   
 }

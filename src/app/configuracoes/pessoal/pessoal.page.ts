@@ -46,8 +46,8 @@ export class PessoalPage implements OnInit {
       var id;
       
       firebase.auth().onAuthStateChanged(user=>{
-        this.TextoEdicao="Editar "+user.uid;
-        db.ref('usuario').once('value').then(snapshot => {
+        this.TextoEdicao="Editar";
+        db.ref('usuario').child(user.uid).once('value').then(snapshot => {
           snapshot.forEach(userResult => {
             this.userData.push(userResult.val());
             console.log(userResult.val().email); 
@@ -97,13 +97,14 @@ export class PessoalPage implements OnInit {
     var erros;
     
     var user = firebase.auth().currentUser;
-    console.log(this.cpf_cnpj.length);
+    console.log(this.email);
     //Email
     user.updateEmail(this.email).then(user=>{
 
       db.ref('usuario')
         .child(firebase.auth().currentUser.uid)
-          .child('email').set(this.email);
+          .child('dados')
+            .child('email').set(this.email);
         
     }).catch(error=>{
       erros+=" Email";
@@ -116,7 +117,7 @@ export class PessoalPage implements OnInit {
     });
     //CPF
     if(this.cpf_cnpj.length==14){
-      db.ref('usuario').child(user.uid).child('cpf_cnpj').set(
+      db.ref('usuario').child(user.uid).child('dados').child('cpf_cnpj').set(
         this.formulario.get('cpf_cnpj').value);
     }else{
       erros+=" cpf";
