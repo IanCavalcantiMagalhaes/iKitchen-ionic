@@ -103,8 +103,8 @@ export class PessoalPage implements OnInit {
 
       db.ref('usuario')
         .child(firebase.auth().currentUser.uid)
-          .child('dados')
-            .child('email').set(this.email);
+        .child('dados')
+          .child('email').set(this.email);
         
     }).catch(error=>{
       erros+=" Email";

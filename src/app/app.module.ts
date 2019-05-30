@@ -15,8 +15,11 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule } from '@ngx-translate/core';
 import { TranslateLoader} from '@ngx-translate/core';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AdMobFree } from '@ionic-native/admob-free/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { File } from '@ionic-native/file/ngx';
 
 export function HttpLoaderFactory(http: HttpClient) {
    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -43,13 +46,16 @@ export function HttpLoaderFactory(http: HttpClient) {
         storageBucket: "SEU STORAGE BUCKET",
         messagingSenderId: "SEU MESSAGING SENDER ID"
       }),
-      AngularFireDatabaseModule
+      AngularFireDatabaseModule,
+      AngularFireStorageModule
   ],
   providers: [
     StatusBar,
     AdMobFree,
     SplashScreen,
     GooglePlus,
+    Camera,
+    File,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

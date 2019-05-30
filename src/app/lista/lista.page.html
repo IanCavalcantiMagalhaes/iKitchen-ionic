@@ -13,9 +13,9 @@
 <ion-list>
     <ion-item [ngStyle]="{'background-image': 'url(../../assets/img/logo.jpg)'}"></ion-item>
     <ion-item *ngFor="let item of Dados">
-        {{ item.dados.nome }}
+        {{ item.nome }}
       <ion-item [ngStyle]="{'color':'orange','width':'50%','font-size':'75%'}">
-          {{ item.dados.preco }}(Parcelas 2x:)
+          {{ item.preco }}(Parcelas 2x:)
       </ion-item>
     </ion-item>
   

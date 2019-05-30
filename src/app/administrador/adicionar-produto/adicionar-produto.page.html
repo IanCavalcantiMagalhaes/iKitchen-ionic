@@ -22,7 +22,9 @@
       <ion-input type="text" [(ngModel)]="quant"></ion-input>
     </ion-item>
 </ion-list>
-
+<input type="file"
+       id="avatar" name="avatar"
+       accept="image/png, image/jpeg" [(ngModel)]="files" (change)="onFileChoose($event)">
 <!-- LOGAR -->
 <ion-button shape="round" expand="full" color="light" (click)="CriarProduto()"> 
     Criar produto 

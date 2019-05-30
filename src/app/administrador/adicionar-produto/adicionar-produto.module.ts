@@ -6,6 +6,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { AdicionarProdutoPage } from './adicionar-produto.page';
+import { Crop } from '@ionic-native/crop/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
+import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
 
 const routes: Routes = [
   {
@@ -20,6 +24,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes)
+  ],providers: [
+    Crop,File,Camera,PhotoLibrary
   ],
   declarations: [AdicionarProdutoPage]
 })

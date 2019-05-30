@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { NavController, NumericValueAccessor, ToastController, MenuController } from '@ionic/angular';
 import { AutenticacaoGuard } from '../guard/autenticacao.guard';
 import { UsuarioService } from '../services/usuario.service';
-import { Storage } from '@ionic/storage';
 import { ServService } from '../serv.service';
 import * as firebase from 'firebase';
 import { ToastService } from '../toast.service';
@@ -20,7 +19,6 @@ export class CriarcontaPage implements OnInit {
   db;
   constructor(private formBuilder:FormBuilder,
     private usuarioService:UsuarioService,
-    private storage:Storage,
     private navCtrl: NavController,
     private router:Router,
     private toastCtrl:ToastService,
@@ -41,11 +39,12 @@ export class CriarcontaPage implements OnInit {
         ).then(user => {
           this.db.ref('usuario').set(firebase.auth().currentUser.uid);
           this.db.ref('usuario').child(firebase.auth().currentUser.uid)
-            .child('dados').set(
-              { email:this.formulario.get('email').value,
-                cpf_cnpj:"",
-                id:firebase.auth().currentUser.uid
-              });
+            .child('dados')
+              .set(
+                { email:this.formulario.get('email').value,
+                  cpf_cnpj:"",
+                  id:firebase.auth().currentUser.uid
+                });
           this.toastCtrl.Mensagem("Cadastrado com suceeso");
 
           this.menuCtrl.enable(true,"first");

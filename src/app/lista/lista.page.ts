@@ -35,7 +35,7 @@ export class ListaPage implements OnInit {
    // this.Dados=await this.usuario.ProcurarProduto(this.Nome);
     this.db.ref('produto').once('value').then(snapshot => {
       snapshot.forEach(produto => {
-        if(produto.val().dados.nome.toLowerCase().includes(nomeProduto.toLowerCase())){
+        if(produto.val().nome.toLowerCase().includes(nomeProduto.toLowerCase())){
           this.Dados.push(produto.val());console.log(this.Dados.nome); 
         }
         //Pega cada pessoa por vez
