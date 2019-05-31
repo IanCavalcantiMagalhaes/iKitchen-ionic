@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>editarProduto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-slides pager="true" [options]="slideOpts">
+        <ion-slide *ngFor="let img of conjuntoDeImagens">
+          <div id="TamanhoDaImagem"><img src="{{ img }}"></div>
+        
+        </ion-slide>
+    </ion-slides>
+</ion-content>

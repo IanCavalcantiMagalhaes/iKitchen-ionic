@@ -8,6 +8,7 @@ import { Storage } from '@ionic/storage';
 import { ServService } from '../serv.service';
 import * as firebase from 'firebase';
 import { ToastService } from '../toast.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,8 @@ export class LoginPage implements OnInit {
     private serv:ServService,
     private usuarioService:UsuarioService,
     public toastCtrl:ToastService,
-    private menuCtrl:MenuController) { }
+    private menuCtrl:MenuController,
+    private translate: TranslateService) { }
 
     list;
   async ngOnInit() {
@@ -36,6 +38,16 @@ export class LoginPage implements OnInit {
       senha:['', [Validators.required, Validators.minLength(6)]]
     });
   }  
+  idioma: string = 'pt-BR';
+  idiomas: {idioma: string, sigla: string}[] = [
+    { idioma: "Português", sigla: 'pt-BR' },
+    { idioma: "English", sigla: 'en' }
+  ]
+  salvar() {
+    this.translate.use(this.idioma);
+    this.storage.set("idioma", this.idioma);
+    console.log(this.idioma);
+  }
   ionViewWillEnter() {
     this.menuCtrl.enable(false,"first");
   }
@@ -44,7 +56,8 @@ export class LoginPage implements OnInit {
   logou:boolean;
   data;
   public X:string;
-  clicou(){
+  async clicou(){
+    this.salvar();
     var mensagem="";
     firebase.auth().signInWithEmailAndPassword(
       this.formulario.get('email').value,this.formulario.get('senha').value).then(user =>{
@@ -55,10 +68,11 @@ export class LoginPage implements OnInit {
       }).catch(error => {
         // Handle Errors here.
         mensagem=error;
+        this.translate.use(navigator.language)
         var errorCode = error.code;
         var errorMessage = error.message;
-        this.toastCtrl.Mensagem(errorCode+" : "+errorMessage);
-        console.log(errorCode+" : "+errorMessage);
+        this.toastCtrl.Mensagem(this.translate.instant(errorMessage));
+        console.log(errorMessage);
         mensagem=errorCode.toString()+" : "+errorMessage.toString();
         
         // ...

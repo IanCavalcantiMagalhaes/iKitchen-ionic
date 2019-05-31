@@ -246,6 +246,14 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "id": "cordova-plugin-photo-library.async_map",
       "file": "plugins/cordova-plugin-photo-library/www/async/dist/async.min.map",
       "pluginId": "cordova-plugin-photo-library"
+    },
+    {
+      "id": "cordova-plugin-firebase.FirebasePlugin",
+      "file": "plugins/cordova-plugin-firebase/www/firebase.js",
+      "pluginId": "cordova-plugin-firebase",
+      "clobbers": [
+        "FirebasePlugin"
+      ]
     }
   ];
   module.exports.metadata = {
@@ -254,6 +262,7 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-camera": "4.0.3",
     "cordova-plugin-telerik-imagepicker": "2.3.2",
     "cordova-plugin-crop": "0.3.1",
-    "cordova-plugin-photo-library": "2.2.1"
+    "cordova-plugin-photo-library": "2.2.1",
+    "cordova-plugin-firebase": "2.0.5"
   };
 });

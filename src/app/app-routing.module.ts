@@ -17,7 +17,8 @@ const routes: Routes = [
   { path: 'test', loadChildren: './test/test.module#TestPageModule' },
   { path: 'principal', loadChildren: './produto/principal/principal.module#PrincipalPageModule' },
   { path: 'loginAdmintrador', loadChildren: './administrador/login-admintrador/login-admintrador.module#LoginAdmintradorPageModule' },
-  { path: 'adicionarProduto', loadChildren: './administrador/adicionar-produto/adicionar-produto.module#AdicionarProdutoPageModule' }
+  { path: 'adicionarProduto', loadChildren: './administrador/adicionar-produto/adicionar-produto.module#AdicionarProdutoPageModule' },  { path: 'editar-produto', loadChildren: './administrador/editar-produto/editar-produto.module#EditarProdutoPageModule' }
+
 
   
   

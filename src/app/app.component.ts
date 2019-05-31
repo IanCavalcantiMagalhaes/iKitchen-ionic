@@ -7,6 +7,7 @@ import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -20,12 +21,22 @@ export class AppComponent {
     private menu:MenuController,
     private router:Router,
     private navCtrl:NavController,
-    private googlePlus: GooglePlus
+    private googlePlus: GooglePlus,
+    private translate: TranslateService,private storage: Storage
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
+    this.platform.ready().then(() => { 
+      this.translate.use(navigator.language);
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
+       });
+    
+    console.log(navigator.language);
+    
+
     var firebaseConfig = {
       apiKey: "AIzaSyAcOet68HIQ0mvDE2lhgBEVtouDmNwNLCM",
       authDomain: "project-f72e3.firebaseapp.com",

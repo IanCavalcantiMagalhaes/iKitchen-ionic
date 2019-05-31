@@ -17,7 +17,13 @@
     <div id="Logo2">
       <img src="logo.jpg">
     </div>
-    <img src="{{ v }}">
+    
+    <ion-slides pager="true" [options]="slideOpts">
+      <ion-slide *ngFor="let img of conjuntoDeImagens">
+        <div id="TamanhoDaImagem"><img src="{{ img }}"></div>
+      
+      </ion-slide>
+    </ion-slides>
     <br>
     <div id="Opcoes">
       <h4>Ja tem conta?</h4>

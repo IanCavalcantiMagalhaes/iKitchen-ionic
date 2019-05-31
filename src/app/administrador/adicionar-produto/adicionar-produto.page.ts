@@ -62,31 +62,37 @@ export class AdicionarProdutoPage implements OnInit {
       let db=firebase.database();
       let store=firebase.storage();
       var imagens=this.imagens;
-      console.log(imagens);
       var id=db.ref('produto').push().key;
+      var Nomes=[];
       db.ref('produto')
-          .child(id)
+          .child(id).child('dados')
               .set({
                   nome:this.nome,
                   descricao:"",
                   preco:this.preco,
                   quantidade:this.quant
-              }).then(X=>{console.log(imagens.length)
+              }).then(X=>{
+                
                 for(var i=0;i<imagens.length+1;i++){
                   
                   firebase.storage()
                     .ref(id)
                       .child(imagens[i].nome)
                         .put(imagens[i].arquivo);
-                  console.log(imagens[i].nome)
+
                 }
-                this.imagens=[]; 
-                this.toastCtrl.Mensagem("Produto criado com sucesso");
-              })
+                console.log(Nomes);
               
-              .catch(err =>this.toastCtrl.Mensagem(err) )
+                  
+              }).catch(err =>this.toastCtrl.Mensagem(err) )
               
-                
+              db.ref('produto')
+              .child(id)
+                .child('dados')
+                  .child('imagens')
+                  .set(imagens);
+          this.imagens=[]; 
+          this.toastCtrl.Mensagem("Produto criado com sucesso");
             // Create a root reference
            
     }
