@@ -57,6 +57,7 @@ export class AppComponent {
   }
   sair(){
     this.menu.enable(false,"first");
+    this.menu.enable(false,"second");
     firebase.auth().signOut();
     this.googlePlus.logout();
     this.navCtrl.navigateBack('/home');

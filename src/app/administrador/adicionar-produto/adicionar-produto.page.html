@@ -1,26 +1,31 @@
 <ion-header>
   <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
     <ion-title>adicionarProduto</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
+    <form [formGroup]="formulario" id="Form">
     <!-- nome -->
     <ion-item>
       <ion-label position="floating">nome</ion-label>
-      <ion-input type="text" [(ngModel)]="nome"></ion-input>
+      <ion-input type="text" [(ngModel)]="nome" formControlName="nome"></ion-input>
     </ion-item>
     <!-- preco -->
     <ion-item>
       <ion-label position="floating">preco</ion-label>
-      <ion-input type="text" [(ngModel)]="preco"></ion-input>
+      <ion-input type="text" [(ngModel)]="preco" formControlName="preco"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">quantidade</ion-label>
-      <ion-input type="text" [(ngModel)]="quant"></ion-input>
+      <ion-input type="number" [(ngModel)]="quant" formControlName="quant"></ion-input>
     </ion-item>
+    </form>
 </ion-list>
 <input type="file"
        id="avatar" name="avatar"

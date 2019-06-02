@@ -14,6 +14,7 @@ export class ListaPage implements OnInit {
   Nome:string;
   db;
   a;
+  conjuntoDeImagens;
   constructor(private router:Router) {
     this.db = firebase.database();
   }
@@ -35,12 +36,49 @@ export class ListaPage implements OnInit {
    // this.Dados=await this.usuario.ProcurarProduto(this.Nome);
     this.db.ref('produto').once('value').then(snapshot => {
       snapshot.forEach(produto => {
-        if(produto.val().nome.toLowerCase().includes(nomeProduto.toLowerCase())){
+        if(produto.val().dados.nome.toLowerCase().includes(nomeProduto.toLowerCase())){
           this.Dados.push(produto.val());console.log(this.Dados.nome); 
+         this.ListarImagens(produto.val().dados.id);
         }
         //Pega cada pessoa por vez
       });
     });
+  }
+  async ListarImagens(id){
+    this.conjuntoDeImagens=[];
+    var db=firebase.database();
+    db.ref('produto').child(id)
+    .child('dados').child('imagens').once('value').then(snapshot => {
+      snapshot.forEach(produto => {
+        this.CarregarImagem(id,produto.val().nome);
+        
+        //this.conjuntoDeImagens.push(this.CarregarImagem('-LgBXA7jxkpxmRcvQyuU',produto.val().nome));
+        //Pega cada pessoa por vez
+      });
+    });
+    console.log(this.conjuntoDeImagens);
+      
+    
+  }
+  CarregarImagem(id,NomeDaImagem){
+  
+    var storage = firebase.storage();
+    var Reference = storage.refFromURL('gs://project-f72e3.appspot.com');
+    var img;
+    //console.log(await this.FirebaseStore.LoadImage());
+    Reference.child(id).child(NomeDaImagem)
+      .getDownloadURL().then(url=> {
+      
+      // Or insert  ed into an <img> element:
+      img = document.getElementById('myimg');
+      img = url;
+      this.conjuntoDeImagens.push(url);
+      //console.log(url);
+    }).catch(function(error) {
+      // Handle any errors
+      this.toastCtrl.Mensagem(error);
+    });
+    
   }
   async pesquisarAvançada(nomeProduto){
     let ValorMinimo=0;

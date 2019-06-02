@@ -10,6 +10,8 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { Crop } from '@ionic-native/crop/ngx';
 import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
 import { Alert } from 'selenium-webdriver';
+import { Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 //import { PhotoLibrary } from 'ionic-native';
 @Component({
   selector: 'app-adicionar-produto',
@@ -18,8 +20,11 @@ import { Alert } from 'selenium-webdriver';
 })
 export class AdicionarProdutoPage implements OnInit {
 //https://ionicthemes.com/tutorials/about/ionic-firebase-image-upload
-  db
+  db;
+  formulario: FormGroup;
   constructor(
+    private router:Router,
+    private formBuilder:FormBuilder,
     private toastCtrl:ToastService,
     private alertController:AlertController,
     private toastController:ToastController,
@@ -38,7 +43,11 @@ export class AdicionarProdutoPage implements OnInit {
   files=[];
   imagens=[];
   ngOnInit() {
-    
+    this.formulario = this.formBuilder.group({
+      nome:['', [Validators.email, Validators.required]],
+      preco:['', [Validators.required]],
+      quant:['', [Validators.required]]
+    });
   }
 //https://github.com/CaioCS100/Adote-um-pet-web/blob/master/assets/libs/js/cadastrar-pet.js
   //CriarProduto(){
@@ -64,9 +73,11 @@ export class AdicionarProdutoPage implements OnInit {
       var imagens=this.imagens;
       var id=db.ref('produto').push().key;
       var Nomes=[];
-      db.ref('produto')
+      if(this.Erros()==null){
+          db.ref('produto')
           .child(id).child('dados')
               .set({
+                  id:id,
                   nome:this.nome,
                   descricao:"",
                   preco:this.preco,
@@ -81,9 +92,6 @@ export class AdicionarProdutoPage implements OnInit {
                         .put(imagens[i].arquivo);
 
                 }
-                console.log(Nomes);
-              
-                  
               }).catch(err =>this.toastCtrl.Mensagem(err) )
               
               db.ref('produto')
@@ -93,10 +101,31 @@ export class AdicionarProdutoPage implements OnInit {
                   .set(imagens);
           this.imagens=[]; 
           this.toastCtrl.Mensagem("Produto criado com sucesso");
-            // Create a root reference
-           
+          this.router.navigateByUrl("/adicionarProduto");
+              // Create a root reference
+        
+      }else{
+        this.toastCtrl.Mensagem("Preencha esses campos:"+this.Erros());
+      }
+         
     }
-    //}
+    Erros(){
+      var error:string="";
+      if(this.nome==null)
+        error+="nome/";
+      if(this.preco==null)
+        error+="preço/";
+      if(this.quant==null)
+        error+="quantidade";
+
+      if(this.nome!=null && this.preco!=null && this.quant!=null){
+        return null;
+      }else{
+        return error;
+      }
+
+    }
+    
     tarefa
     selecionarImagem() {
       this.alertController.create({

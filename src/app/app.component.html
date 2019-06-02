@@ -6,7 +6,7 @@
 <ion-menu side="start" menuId="first">
     <ion-header>
       <ion-toolbar color="primary">
-        <ion-title>Start Menu</ion-title>
+        <ion-title>Cliente Menu</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
@@ -37,6 +37,18 @@ TODO: Add SDKs for Firebase products that you want to use
       </ion-list>
     </ion-content>
   </ion-menu>
-  
-  
+  <ion-menu side="start" menuId="second">
+      <ion-header>
+          <ion-toolbar color="primary">
+            <ion-title>Administrador Menu</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <ion-list>
+            <ion-item>Adicionar Produto</ion-item>
+            <ion-item>Editar ou apagar produto</ion-item>
+            <ion-item (click)="sair()">Sair</ion-item>
+          </ion-list>
+        </ion-content>
+  </ion-menu>
   <ion-router-outlet main></ion-router-outlet>

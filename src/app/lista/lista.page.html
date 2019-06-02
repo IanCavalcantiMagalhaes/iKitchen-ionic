@@ -13,9 +13,18 @@
 <ion-list>
     <ion-item [ngStyle]="{'background-image': 'url(../../assets/img/logo.jpg)'}"></ion-item>
     <ion-item *ngFor="let item of Dados">
-        {{ item.nome }}
+      <ion-slides pager="true" [options]="slideOpts">
+        <ion-slide *ngFor="let img of conjuntoDeImagens">
+          <div id="TamanhoDaImagem">
+            <img src="{{ img }}">
+          </div>
+        
+        </ion-slide>
+      </ion-slides>
+      <ion-item>{{ item.dados.nome }}</ion-item>
+        
       <ion-item [ngStyle]="{'color':'orange','width':'50%','font-size':'75%'}">
-          {{ item.preco }}(Parcelas 2x:)
+          {{ item.dados.preco }}(Parcelas 2x:)
       </ion-item>
     </ion-item>
   
