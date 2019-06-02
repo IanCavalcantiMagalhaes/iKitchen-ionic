@@ -37,8 +37,8 @@ export class ListaPage implements OnInit {
     this.db.ref('produto').once('value').then(snapshot => {
       snapshot.forEach(produto => {
         if(produto.val().dados.nome.toLowerCase().includes(nomeProduto.toLowerCase())){
-          this.Dados.push(produto.val());console.log(this.Dados.nome); 
          this.ListarImagens(produto.val().dados.id);
+         this.Dados.push(produto.val());
         }
         //Pega cada pessoa por vez
       });
@@ -72,7 +72,8 @@ export class ListaPage implements OnInit {
       // Or insert  ed into an <img> element:
       img = document.getElementById('myimg');
       img = url;
-      this.conjuntoDeImagens.push(url);
+      
+      this.conjuntoDeImagens.push({donoDaImagem:id,url:url});
       //console.log(url);
     }).catch(function(error) {
       // Handle any errors
