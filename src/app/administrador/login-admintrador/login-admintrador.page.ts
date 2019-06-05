@@ -28,6 +28,7 @@ export class LoginAdmintradorPage implements OnInit {
     firebase.auth().signInWithEmailAndPassword(
       this.email,this.senha).then(user =>{
         this.toastCtrl.Mensagem("Logado com sucesso");
+        this.menuCtrl.enable(false,"first");
         this.menuCtrl.enable(true,"second");
         this.router.navigateByUrl('adicionarProduto');
       }).catch(error => {

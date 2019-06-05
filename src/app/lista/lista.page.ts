@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-lista',
@@ -10,12 +11,14 @@ import * as firebase from 'firebase';
 export class ListaPage implements OnInit {
 
   CampoPesquisa;
-  Dados;
+  Dados=[];
   Nome:string;
   db;
   a;
+  public ImagemPrincipal;
   conjuntoDeImagens;
-  constructor(private router:Router) {
+  constructor(private router:Router,
+    private toastCtrl:ToastController) {
     this.db = firebase.database();
   }
   
@@ -31,7 +34,6 @@ export class ListaPage implements OnInit {
   }
   async pesquisar(nomeProduto){
     let ValorMinimo=0;
-
     this.Dados=[];
    // this.Dados=await this.usuario.ProcurarProduto(this.Nome);
     this.db.ref('produto').once('value').then(snapshot => {
@@ -48,15 +50,15 @@ export class ListaPage implements OnInit {
     this.conjuntoDeImagens=[];
     var db=firebase.database();
     db.ref('produto').child(id)
-    .child('dados').child('imagens').once('value').then(snapshot => {
+    .child('dados').child('imagens').child('imagemPrincipal').once('value').then(snapshot => {
       snapshot.forEach(produto => {
-        this.CarregarImagem(id,produto.val().nome);
+        console.log(produto.val());
+        this.CarregarImagem(id,produto.val());
         
         //this.conjuntoDeImagens.push(this.CarregarImagem('-LgBXA7jxkpxmRcvQyuU',produto.val().nome));
         //Pega cada pessoa por vez
       });
     });
-    console.log(this.conjuntoDeImagens);
       
     
   }
@@ -64,7 +66,7 @@ export class ListaPage implements OnInit {
   
     var storage = firebase.storage();
     var Reference = storage.refFromURL('gs://project-f72e3.appspot.com');
-    var img;
+    var img;var a=[];
     //console.log(await this.FirebaseStore.LoadImage());
     Reference.child(id).child(NomeDaImagem)
       .getDownloadURL().then(url=> {
@@ -72,15 +74,18 @@ export class ListaPage implements OnInit {
       // Or insert  ed into an <img> element:
       img = document.getElementById('myimg');
       img = url;
-      
       this.conjuntoDeImagens.push({donoDaImagem:id,url:url});
+      
+      
       //console.log(url);
     }).catch(function(error) {
       // Handle any errors
       this.toastCtrl.Mensagem(error);
     });
-    
+    //this.conjuntoDeImagens.push(a);
+
   }
+
   async pesquisarAvançada(nomeProduto){
     let ValorMinimo=0;
 
@@ -92,7 +97,7 @@ export class ListaPage implements OnInit {
           produto.val().preço>ValorMinimo){
           this.Dados=produto.val();
         }
-        console.log(produto.val()); //Pega cada pessoa por vez
+         //Pega cada pessoa por vez
       });
     });
   }

@@ -64,6 +64,7 @@ export class LoginPage implements OnInit {
         this.toastCtrl.Mensagem("Logado com sucesso");
         mensagem="Logado com sucesso";
         this.menuCtrl.enable(true,"first");
+        this.menuCtrl.enable(false,"second");
         this.router.navigateByUrl('configuracoes/pessoal');
       }).catch(error => {
         // Handle Errors here.

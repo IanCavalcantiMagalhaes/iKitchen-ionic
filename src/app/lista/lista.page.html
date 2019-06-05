@@ -13,17 +13,13 @@
 <ion-list>
     <ion-item [ngStyle]="{'background-image': 'url(../../assets/img/logo.jpg)'}"></ion-item>
     <ion-item *ngFor="let item of Dados">
-      <ion-slides pager="true" [options]="slideOpts">
-        <div *ngFor="let img of conjuntoDeImagens" >
-          <div >
-            <ion-slide *ngIf="item.dados.id==img.donoDaImagem">
+        <div *ngFor="let img of conjuntoDeImagens;let i = index" >
+            <div *ngIf="item.dados.id==img.donoDaImagem">
               <div id="TamanhoDaImagem">
                 <img src="{{ img.url }}">
               </div>
-            </ion-slide>
-          </div>  
-        </div>  
-      </ion-slides>
+            </div>  
+          </div>   
       <ion-item>{{ item.dados.nome }}</ion-item>
         
       <ion-item [ngStyle]="{'color':'orange','width':'50%','font-size':'75%'}">

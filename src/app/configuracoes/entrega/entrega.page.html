@@ -9,22 +9,23 @@
     <!-- AREA DE INSERT -->
       
           <ion-list >
-                
-            <ion-item  color="red" [ngStyle]="{'background-color':cepNovoColor}" >
-            <ion-label position="floating" color="{{ cepNovoColor }}" id="CEP">CEP</ion-label>
-            <ion-input [(ngModel)]="cepNovo" color="{{ cepNovoColor }}"
-              (change)="cepNovo = mask(cepNovo)"
-              name="cepNovo" maxlength="8"></ion-input>
-            </ion-item>
-            
-            <ion-item>
-            <ion-label position="floating">Numero da residencia</ion-label>
-            <ion-input value="" type="text" formControlName="numeroResidencialNovo"></ion-input>
-            </ion-item>
-              <ion-button 
-              expand="full" (click)="InserirDadosDeEntregaNovos()"> 
-                  Adicionar 
-              </ion-button> 
+            <form [formGroup]="formulario" id="Form">
+              <ion-item  color="red" [ngStyle]="{'background-color':cepNovoColor}" >
+              <ion-label position="floating" color="{{ cepNovoColor }}" id="CEP">CEP</ion-label>
+              <ion-input [(ngModel)]="cepNovo" color="{{ cepNovoColor }}"
+                (change)="cepNovo = mask(cepNovo)"
+                name="cepNovo" maxlength="8"></ion-input>
+              </ion-item>
+              
+              <ion-item>
+              <ion-label position="floating">Numero da residencia</ion-label>
+              <ion-input value="" type="text"></ion-input>
+              </ion-item>
+                <ion-button 
+                expand="full" (click)="InserirDadosDeEntregaNovos()"> 
+                    Adicionar 
+                </ion-button> 
+            </form>     
           </ion-list>
           
           

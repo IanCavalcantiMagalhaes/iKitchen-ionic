@@ -37,7 +37,6 @@ export class CriarcontaPage implements OnInit {
     firebase.auth().createUserWithEmailAndPassword(
       this.formulario.get('email').value,this.formulario.get('senha').value
         ).then(user => {
-          this.db.ref('usuario').set(firebase.auth().currentUser.uid);
           this.db.ref('usuario').child(firebase.auth().currentUser.uid)
             .child('dados')
               .set(

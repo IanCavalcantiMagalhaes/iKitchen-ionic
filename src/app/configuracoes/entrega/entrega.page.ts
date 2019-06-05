@@ -52,8 +52,7 @@ export class EntregaPage implements OnInit {
     this.ListaCep=[await this.usuario.getCEPByUserId(1)];*/
     //this.toastEntrega(this.ListaCep[0].cep);
     this.formulario = this.formBuilder.group({
-      cepNovo:['', [Validators.required]],
-      numeroResidencialNovo:['', [Validators.required, Validators.minLength(6)]]
+      //numeroResidencialNovo:['', [Validators.required]]
     });
     
   }
@@ -65,15 +64,15 @@ export class EntregaPage implements OnInit {
   async InserirDadosDeEntregaNovos(){//Insert
     var cep=[];
     var numeroResidencial=[];
-
-    this.db.ref('usuario')
+    console.log(this.formulario.valid);
+      this.db.ref('usuario')
       .child(firebase.auth().currentUser.uid)
         .child('dados')
-          .child('LocalDeEntregua')
+          .child('LocalDeEntrega')
             .child('cep').once('value').then(snapshot => {
               snapshot.forEach(userResult => {
                 if(userResult.val()){
-                  cep.push(userResult.val());console.log(userResult.val());
+                  cep.push(userResult.val());console.log(userResult.val());//popular array com dados ja existentes
                 }
                 
                 //numeroResidencial.push(userResult.val().NumeroResidencia);
@@ -82,9 +81,13 @@ export class EntregaPage implements OnInit {
           cep.push(this.cepNovo);
           this.db.ref('usuario')
             .child(firebase.auth().currentUser.uid).child('dados')
-            .child('LocalDeEntregua').child('cep').set(cep);
+            .child('LocalDeEntrega').child('cep').set(cep);
             this.toastCtrl.Mensagem("CEP adicionado");
     });
+    
+      this.toastCtrl.Mensagem("dados invalidos");
+    
+    
     numeroResidencial.push(this.numeroResidencialNovo);
     
 

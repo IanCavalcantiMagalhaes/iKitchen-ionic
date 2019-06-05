@@ -47,6 +47,7 @@ export class PessoalPage implements OnInit {
       
       firebase.auth().onAuthStateChanged(user=>{
         this.TextoEdicao="Editar";
+        console.log(user.uid);
         db.ref('usuario').child(user.uid).once('value').then(snapshot => {
           snapshot.forEach(userResult => {
             this.userData.push(userResult.val());

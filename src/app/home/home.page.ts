@@ -42,10 +42,10 @@ export class HomePage {
     conjuntoDeImagens=[];
     async ListarImagens(){
       var db=firebase.database();
-      db.ref('produto').child('-LgDiItgUlT0YyHbP7M4')
+      db.ref('produto').child('-LgS2CRgw8uvREjOfR4t')
       .child('dados').child('imagens').once('value').then(snapshot => {
         snapshot.forEach(produto => {
-          this.CarregarImagem('-LgDiItgUlT0YyHbP7M4',produto.val().nome);
+          this.CarregarImagem('-LgS2CRgw8uvREjOfR4t',produto.val().nome);
           
           //this.conjuntoDeImagens.push(this.CarregarImagem('-LgBXA7jxkpxmRcvQyuU',produto.val().nome));
           //Pega cada pessoa por vez

@@ -99,6 +99,12 @@ export class AdicionarProdutoPage implements OnInit {
                 .child('dados')
                   .child('imagens')
                   .set(imagens);
+              db.ref('produto')
+              .child(id)
+                .child('dados')
+                  .child('imagens')
+                  .child('imagemPrincipal')
+                  .set({nome:imagens[0].nome});
           this.imagens=[]; 
           this.toastCtrl.Mensagem("Produto criado com sucesso");
           this.router.navigateByUrl("/adicionarProduto");

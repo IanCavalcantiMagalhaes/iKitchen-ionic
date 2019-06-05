@@ -66,7 +66,7 @@ export class AppComponent {
   IrParaConfiguracoes(){
     console.log("CCC");
     this.menu.close();
-    this.navCtrl.navigateRoot('/configuracoes');
+    this.navCtrl.navigateRoot('/configuracoes/pessoal');
   }
   IrParaProduto(){
     this.menu.close();
