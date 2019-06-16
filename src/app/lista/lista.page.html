@@ -10,19 +10,18 @@
 <ion-content padding>
 
 <ion-searchbar showcancelbutton="" nmae="x" [(ngModel)]="a" (change)="pesquisar(a)"></ion-searchbar>
-<ion-list>
-    <ion-item [ngStyle]="{'background-image': 'url(../../assets/img/logo.jpg)'}"></ion-item>
-    <ion-item *ngFor="let item of Dados">
-        <div *ngFor="let img of conjuntoDeImagens;let i = index" >
+<ion-list class="bege">
+    <ion-item *ngFor="let item of Dados" class="bege">
+        <div *ngFor="let img of conjuntoDeImagens;let i = index" class="bege">
             <div *ngIf="item.dados.id==img.donoDaImagem">
               <div id="TamanhoDaImagem">
                 <img src="{{ img.url }}">
               </div>
             </div>  
           </div>   
-      <ion-item>{{ item.dados.nome }}</ion-item>
+      <ion-item class="bege">{{ item.dados.nome }}</ion-item>
         
-      <ion-item [ngStyle]="{'color':'orange','width':'50%','font-size':'75%'}">
+      <ion-item [ngStyle]="{'color':'orange','width':'50%','font-size':'75%'}" class="bege">
           {{ item.dados.preco }}(Parcelas 2x:)
       </ion-item>
     </ion-item>

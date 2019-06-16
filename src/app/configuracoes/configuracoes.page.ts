@@ -10,20 +10,24 @@ import { MenuController } from '@ionic/angular';
 })
 export class ConfiguracoesPage implements OnInit {
   BarraPesquisa=false;
+  laranja={TelaDeFundo:"orange",CorDoIcone:"white"};
+  branco={TelaDeFundo:"white",CorDoIcone:"orange"};
   constructor(private element:ElementRef,
     private render:Renderer,
     private Serv:ServService,
     private menuCtrl:MenuController) { }
 
   ngOnInit() {
-    this.pessoalSelecionado=true;
+    this.pessoalSelecionado=this.laranja;
+    this.pagamentoSelecionado=this.branco;
+    this.entregaSelecionado=this.branco;
     this.SomenteLer=true;
     this.TextoEdicao="Editar";
   }
   public SomenteLer:boolean;TextoEdicao:String;
-  entregaSelecionado:boolean;
-  pagamentoSelecionado:boolean;
-  pessoalSelecionado:boolean;
+  entregaSelecionado;
+  pagamentoSelecionado;
+  pessoalSelecionado;
 
   ionViewWillEnter() {
     this.menuCtrl.enable(true,"first");
@@ -47,20 +51,20 @@ export class ConfiguracoesPage implements OnInit {
     //this.pessoal.SomenteLer=false;
   }
   PessoalSelecionado(){
-    this.pessoalSelecionado=true;
-    this.pagamentoSelecionado=false;
-    this.entregaSelecionado=false;
+    this.pessoalSelecionado=this.laranja;
+    this.pagamentoSelecionado=this.branco;
+    this.entregaSelecionado=this.branco;
   }
 
   PagamentoSelecionado(){
-    this.pessoalSelecionado=false;
-    this.pagamentoSelecionado=true;
-    this.entregaSelecionado=false;
+    this.pessoalSelecionado=this.branco;
+    this.pagamentoSelecionado=this.laranja;
+    this.entregaSelecionado=this.branco;
   }
   EntregaSelecionado(){
-    this.pessoalSelecionado=false;
-    this.pagamentoSelecionado=false;
-    this.entregaSelecionado=true;
+    this.pessoalSelecionado=this.branco;
+    this.pagamentoSelecionado=this.branco;
+    this.entregaSelecionado=this.laranja;
   }
 
  

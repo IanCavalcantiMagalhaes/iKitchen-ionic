@@ -13,18 +13,21 @@
   
     <ion-tab-bar slot="top">
   
-      <ion-tab-button tab="pessoal" (click)="PessoalSelecionado()" [appDirPessoal]="pessoalSelecionado">
+      <ion-tab-button tab="pessoal" (click)="PessoalSelecionado()" 
+      [ngStyle]="{'background-color':pessoalSelecionado.TelaDeFundo,'color':pessoalSelecionado.CorDoIcone}">
         <ion-label>Pessoal</ion-label>
         <ion-icon name="home"></ion-icon>
         <ion-badge style="background-color:orangered">6</ion-badge>
       </ion-tab-button>
   
-      <ion-tab-button tab="pagamento" (click)="PagamentoSelecionado()" [appDirPagamento]="pagamentoSelecionado">
+      <ion-tab-button tab="pagamento" (click)="PagamentoSelecionado()"
+      [ngStyle]="{'background-color':pagamentoSelecionado.TelaDeFundo,'color':pagamentoSelecionado.CorDoIcone}">
         <ion-label>Pagamento</ion-label>
         <ion-icon name="settings"></ion-icon>
       </ion-tab-button>
 
-      <ion-tab-button tab="entrega" (click)="EntregaSelecionado()" [appDirEntrega]="entregaSelecionado">
+      <ion-tab-button tab="entrega" (click)="EntregaSelecionado()"
+       [ngStyle]="{'background-color':entregaSelecionado.TelaDeFundo,'color':entregaSelecionado.CorDoIcone}">
         <ion-label>Entrega</ion-label>
         <ion-icon name="settings"></ion-icon>
       </ion-tab-button>

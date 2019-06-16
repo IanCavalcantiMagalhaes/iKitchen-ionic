@@ -8,16 +8,16 @@
   <ion-list  >
     <!-- AREA DE INSERT -->
       
-          <ion-list >
+          <ion-list>
             <form [formGroup]="formulario" id="Form">
-              <ion-item  color="red" [ngStyle]="{'background-color':cepNovoColor}" >
+              <ion-item [ngStyle]="{'color':cepNovoColor}" class="bege">
               <ion-label position="floating" color="{{ cepNovoColor }}" id="CEP">CEP</ion-label>
               <ion-input [(ngModel)]="cepNovo" color="{{ cepNovoColor }}"
                 (change)="cepNovo = mask(cepNovo)"
                 name="cepNovo" maxlength="8"></ion-input>
               </ion-item>
               
-              <ion-item>
+              <ion-item class="bege">
               <ion-label position="floating">Numero da residencia</ion-label>
               <ion-input value="" type="text"></ion-input>
               </ion-item>
@@ -33,10 +33,10 @@
         
     <ion-list-header>Selecione um CEP para editar</ion-list-header>
     <!-- AREA DE UPDATE OU DELETE -->
-    <ion-item>
+    <ion-item class="bege">
       <ion-label>CEPs registrados</ion-label>
       <ion-select value="brown" [ngModel]="LocalizacaoSelecionado" okText="Okay" cancelText="Dismiss" (change)=CepSelecionado()>
-        <ion-item *ngFor="let item of ListaCep">
+        <ion-item *ngFor="let item of ListaCep" class="bege">
           <ion-select-option 
             value="{{ item.cep }}">
             CEP:{{ item.cep }} / Residencias:{{ item.residencia }}

@@ -4,7 +4,6 @@ import { ToastService } from '../../toast.service';
 import { fileURLToPath } from 'url';
 import { puts } from 'util';
 import { CameraOptions, Camera } from '@ionic-native/camera/ngx';
-import { platform } from 'os';
 import { Platform, AlertController, ToastController } from '@ionic/angular';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Crop } from '@ionic-native/crop/ngx';

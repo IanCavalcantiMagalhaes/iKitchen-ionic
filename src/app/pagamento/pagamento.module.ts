@@ -5,7 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 import { PagamentoPage } from './pagamento.page';
-import { DirCartaoDirective } from './dirPagamento/dir-cartao.directive';
 
 const routes: Routes = [
   {
@@ -26,6 +25,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [PagamentoPage,DirCartaoDirective]
+  declarations: [PagamentoPage]
 })
 export class PagamentoPageModule {}
